@@ -266,7 +266,6 @@ namespace Intersect.Server.Networking
                 var naturalWithPing = configurableNaturalLowerMargin < deltaWithPing &&
                                       deltaWithPing < configurableNaturalUpperMargin;
 
-
                 var adjustedDesync = Math.Abs(deltaAdjusted);
                 var timeDesync = adjustedDesync > configurableBaseDesyncForgiveness + errorRangeMaximum * configurablePingDesyncForgivenessFactor;
 
@@ -276,7 +275,6 @@ namespace Intersect.Server.Networking
                     PacketSender.SendPing(client, false);
                     timeDesync = false;
                 }
-
 
                 if (Debugger.IsAttached)
                 {
@@ -411,7 +409,6 @@ namespace Intersect.Server.Networking
             }
 
             client.ResetTimeout();
-
 
             // Are we at capacity yet, or can this user still log in?
             if (Globals.OnlineList.Count >= Options.MaxLoggedinUsers)
@@ -962,6 +959,7 @@ namespace Intersect.Server.Networking
 
             var unequippedAttack = false;
             var target = packet.Target;
+            bool targetOnFocus = packet.TargetOnFocus;
 
             var clientTime = packet.Adjusted / TimeSpan.TicksPerMillisecond;
             if (player.ClientAttackTimer > clientTime || (!Options.Instance.PlayerOpts.AllowCombatMovement && player.ClientMoveTimer > clientTime))
@@ -1032,18 +1030,22 @@ namespace Intersect.Server.Networking
                     attackingTile.Translate(1, 0);
 
                     break;
+
                 case 4:
                     attackingTile.Translate(-1, -1); // UpLeft
 
                     break;
+
                 case 5:
                     attackingTile.Translate(1, -1); // UpRight
 
                     break;
+
                 case 6:
                     attackingTile.Translate(-1, 1); // DownLeft
 
                     break;
+
                 case 7:
                     attackingTile.Translate(1, 1); // DownRight
 
@@ -1141,7 +1143,6 @@ namespace Intersect.Server.Networking
                             return;
                         }
 #endif
-
                 }
                 else
                 {
@@ -1180,7 +1181,7 @@ namespace Intersect.Server.Networking
                 {
                     if (entity.Id == target)
                     {
-                        player.TryAttack(entity);
+                        player.TryAttack(entity, targetOnFocus);
 
                         break;
                     }
@@ -1480,7 +1481,7 @@ namespace Intersect.Server.Networking
 
             // Go through each item we're trying to give our player and see if we can do so.
             var toRemove = new List<Guid>();
-            foreach(var mapItem in giveItems)
+            foreach (var mapItem in giveItems)
             {
                 if (mapItem == null)
                 {
@@ -1522,9 +1523,8 @@ namespace Intersect.Server.Networking
                 }
             }
 
-
             // Remove all items that were picked up.
-            foreach(var id in toRemove)
+            foreach (var id in toRemove)
             {
                 map.RemoveItem(id);
             }
@@ -2304,7 +2304,6 @@ namespace Intersect.Server.Networking
                 {
                     if (chr.Id == packet.CharacterId)
                     {
-
                         using (var logging = DbInterface.LoggingContext)
                         {
                             logging.UserActivityHistory.Add(
@@ -2409,7 +2408,7 @@ namespace Intersect.Server.Networking
             PacketSender.SendPasswordResetResult(client, success);
         }
 
-        #endregion
+        #endregion "Client Packets"
 
         #region "Editor Packets"
 
@@ -3458,6 +3457,6 @@ namespace Intersect.Server.Networking
             }
         }
 
-        #endregion
+        #endregion "Editor Packets"
     }
 }
