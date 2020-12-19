@@ -614,6 +614,7 @@ namespace Intersect.Server.Networking
             var clientTime = packet.Adjusted / TimeSpan.TicksPerMillisecond;
             if (player.ClientMoveTimer <= clientTime && (Options.Instance.PlayerOpts.AllowCombatMovement || player.ClientAttackTimer <= clientTime))
             {
+                player.Running = packet.Run;
                 var canMove = player.CanMove(packet.Dir);
                 if ((canMove == -1 || canMove == -4) && client.Entity.MoveRoute == null)
                 {

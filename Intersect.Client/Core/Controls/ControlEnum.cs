@@ -64,7 +64,8 @@
 
         OpenAdminPanel,
 
-        ToggleGui
+        ToggleGui,
+        Running
 
     }
 
