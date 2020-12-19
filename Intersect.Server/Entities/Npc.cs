@@ -37,8 +37,10 @@ namespace Intersect.Server.Entities
         /// <summary>
         /// Returns the entity that ranks the highest on this NPC's damage map.
         /// </summary>
-        public Entity DamageMapHighest { 
-            get {
+        public Entity DamageMapHighest
+        {
+            get
+            {
                 long damage = 0;
                 Entity top = null;
                 foreach (var pair in DamageMap)
@@ -50,7 +52,7 @@ namespace Intersect.Server.Entities
                     }
                 }
                 return top;
-            } 
+            }
         }
 
         public bool Despawnable;
@@ -100,10 +102,10 @@ namespace Intersect.Server.Entities
             Base = myBase;
             Despawnable = despawnable;
 
-            for (var i = 0; i < (int) Stats.StatCount; i++)
+            for (var i = 0; i < (int)Stats.StatCount; i++)
             {
                 BaseStats[i] = myBase.Stats[i];
-                Stat[i] = new Stat((Stats) i, this);
+                Stat[i] = new Stat((Stats)i, this);
             }
 
             var spellSlot = 0;
@@ -130,13 +132,13 @@ namespace Intersect.Server.Entities
                 //}
             }
 
-            for (var i = 0; i < (int) Vitals.VitalCount; i++)
+            for (var i = 0; i < (int)Vitals.VitalCount; i++)
             {
                 SetMaxVital(i, myBase.MaxVital[i]);
                 SetVital(i, myBase.MaxVital[i]);
             }
 
-            Range = (byte) myBase.SightRange;
+            Range = (byte)myBase.SightRange;
             mPathFinder = new Pathfinder(this);
         }
 
@@ -171,7 +173,7 @@ namespace Intersect.Server.Entities
         {
             //Can't assign a new target if taunted, unless we're resetting their target somehow.
             var pathTarget = mPathFinder.GetTarget();
-            if (en != null || (pathTarget != null && (pathTarget.TargetMapId != AggroCenterMap.Id ||  pathTarget.TargetX != AggroCenterX || pathTarget.TargetY != AggroCenterY)))
+            if (en != null || (pathTarget != null && (pathTarget.TargetMapId != AggroCenterMap.Id || pathTarget.TargetX != AggroCenterX || pathTarget.TargetY != AggroCenterY)))
             {
                 var statuses = Statuses.Values.ToArray();
                 foreach (var status in statuses)
@@ -182,19 +184,19 @@ namespace Intersect.Server.Entities
                     }
                 }
             }
-            
+
             if (en.GetType() == typeof(Projectile))
             {
-                if (((Projectile) en).Owner != this)
+                if (((Projectile)en).Owner != this)
                 {
-                    Target = ((Projectile) en).Owner;
+                    Target = ((Projectile)en).Owner;
                 }
             }
             else
             {
                 if (en.GetType() == typeof(Npc))
                 {
-                    if (((Npc) en).Base == Base)
+                    if (((Npc)en).Base == Base)
                     {
                         if (Base.AttackAllies == false)
                         {
@@ -247,7 +249,7 @@ namespace Intersect.Server.Entities
             }
 
             Target = null;
- 
+
             PacketSender.SendNpcAggressionToProximity(this);
         }
 
@@ -296,7 +298,7 @@ namespace Intersect.Server.Entities
             }
             else if (entity.GetType() == typeof(Player))
             {
-                var player = (Player) entity;
+                var player = (Player)entity;
                 var friendly = spell != null && spell.Combat.Friendly;
                 if (friendly && IsAllyOf(player))
                 {
@@ -346,13 +348,13 @@ namespace Intersect.Server.Entities
                 if (Base.AttackAnimation != null)
                 {
                     PacketSender.SendAnimationToProximity(
-                        Base.AttackAnimationId, -1, Guid.Empty, target.MapId, (byte) target.X, (byte) target.Y,
-                        (sbyte) Dir
+                        Base.AttackAnimationId, -1, Guid.Empty, target.MapId, (byte)target.X, (byte)target.Y,
+                        (sbyte)Dir
                     );
                 }
 
                 base.TryAttack(
-                    target, Base.Damage, (DamageType) Base.DamageType, (Stats) Base.ScalingStat, Base.Scaling,
+                    target, Base.Damage, (DamageType)Base.DamageType, (Stats)Base.ScalingStat, Base.Scaling,
                     Base.CritChance, Base.CritMultiplier, deadAnimations, aliveAnimations
                 );
 
@@ -367,19 +369,19 @@ namespace Intersect.Server.Entities
             {
                 if (enemy != null && enemy.GetType() == typeof(Npc) && Base != null)
                 {
-                    if (((Npc) enemy).Base.NpcVsNpcEnabled == false)
+                    if (((Npc)enemy).Base.NpcVsNpcEnabled == false)
                     {
                         return false;
                     }
 
-                    if (Base.AttackAllies && ((Npc) enemy).Base == Base)
+                    if (Base.AttackAllies && ((Npc)enemy).Base == Base)
                     {
                         return true;
                     }
 
                     for (var i = 0; i < Base.AggroList.Count; i++)
                     {
-                        if (NpcBase.Get(Base.AggroList[i]) == ((Npc) enemy).Base)
+                        if (NpcBase.Get(Base.AggroList[i]) == ((Npc)enemy).Base)
                         {
                             return true;
                         }
@@ -398,7 +400,7 @@ namespace Intersect.Server.Entities
                 if (enemy != null &&
                     enemy.GetType() == typeof(Npc) &&
                     Base != null &&
-                    ((Npc) enemy).Base == Base &&
+                    ((Npc)enemy).Base == Base &&
                     Base.AttackAllies == false)
                 {
                     return true;
@@ -541,12 +543,12 @@ namespace Intersect.Server.Entities
                 return;
             }
 
-            if (spellBase.VitalCost[(int) Vitals.Mana] > GetVital(Vitals.Mana))
+            if (spellBase.VitalCost[(int)Vitals.Mana] > GetVital(Vitals.Mana))
             {
                 return;
             }
 
-            if (spellBase.VitalCost[(int) Vitals.Health] > GetVital(Vitals.Health))
+            if (spellBase.VitalCost[(int)Vitals.Health] > GetVital(Vitals.Health))
             {
                 return;
             }
@@ -575,22 +577,22 @@ namespace Intersect.Server.Entities
 
             CastTime = Globals.Timing.Milliseconds + spellBase.CastDuration;
 
-            if (spellBase.VitalCost[(int) Vitals.Mana] > 0)
+            if (spellBase.VitalCost[(int)Vitals.Mana] > 0)
             {
-                SubVital(Vitals.Mana, spellBase.VitalCost[(int) Vitals.Mana]);
+                SubVital(Vitals.Mana, spellBase.VitalCost[(int)Vitals.Mana]);
             }
             else
             {
-                AddVital(Vitals.Mana, -spellBase.VitalCost[(int) Vitals.Mana]);
+                AddVital(Vitals.Mana, -spellBase.VitalCost[(int)Vitals.Mana]);
             }
 
-            if (spellBase.VitalCost[(int) Vitals.Health] > 0)
+            if (spellBase.VitalCost[(int)Vitals.Health] > 0)
             {
-                SubVital(Vitals.Health, spellBase.VitalCost[(int) Vitals.Health]);
+                SubVital(Vitals.Health, spellBase.VitalCost[(int)Vitals.Health]);
             }
             else
             {
-                AddVital(Vitals.Health, -spellBase.VitalCost[(int) Vitals.Health]);
+                AddVital(Vitals.Health, -spellBase.VitalCost[(int)Vitals.Health]);
             }
 
             if ((spellBase.Combat?.Friendly ?? false) && spellBase.SpellType != SpellTypes.WarpTo)
@@ -634,7 +636,7 @@ namespace Intersect.Server.Entities
 
             if (spellBase.CastAnimationId != Guid.Empty)
             {
-                PacketSender.SendAnimationToProximity(spellBase.CastAnimationId, 1, Id, MapId, 0, 0, (sbyte) Dir);
+                PacketSender.SendAnimationToProximity(spellBase.CastAnimationId, 1, Id, MapId, 0, 0, (sbyte)Dir);
 
                 //Target Type 1 will be global entity
             }
@@ -668,7 +670,7 @@ namespace Intersect.Server.Entities
             var fleeing = false;
             if (Base.FleeHealthPercentage > 0)
             {
-                var fleeHpCutoff = GetMaxVital(Vitals.Health) * ((float) Base.FleeHealthPercentage / 100f);
+                var fleeHpCutoff = GetMaxVital(Vitals.Health) * ((float)Base.FleeHealthPercentage / 100f);
                 if (GetVital(Vitals.Health) < fleeHpCutoff)
                 {
                     fleeing = true;
@@ -815,6 +817,22 @@ namespace Intersect.Server.Entities
                                                 dir = 2;
 
                                                 break;
+                                            case 4:
+                                                dir = 5;
+
+                                                break;
+                                            case 5:
+                                                dir = 4;
+
+                                                break;
+                                            case 6:
+                                                dir = 7;
+
+                                                break;
+                                            case 7:
+                                                dir = 6;
+
+                                                break;
                                         }
                                     }
 
@@ -899,7 +917,21 @@ namespace Intersect.Server.Entities
                                     break;
                                 case 3:
                                     dir = 2;
+                                    break;
+                                case 4:
+                                    dir = 5;
 
+                                    break;
+                                case 5:
+                                    dir = 4;
+
+                                    break;
+                                case 6:
+                                    dir = 7;
+
+                                    break;
+                                case 7:
+                                    dir = 6;
                                     break;
                             }
 
@@ -962,13 +994,13 @@ namespace Intersect.Server.Entities
                     return;
                 }
 
-                if (Base.Movement == (int) NpcMovement.StandStill)
+                if (Base.Movement == (int)NpcMovement.StandStill)
                 {
                     LastRandomMove = Globals.Timing.Milliseconds + Randomization.Next(1000, 3000);
 
                     return;
                 }
-                else if (Base.Movement == (int) NpcMovement.TurnRandomly)
+                else if (Base.Movement == (int)NpcMovement.TurnRandomly)
                 {
                     ChangeDir((byte)Randomization.Next(0, 4));
                     LastRandomMove = Globals.Timing.Milliseconds + Randomization.Next(1000, 3000);
@@ -979,7 +1011,7 @@ namespace Intersect.Server.Entities
                 var i = Randomization.Next(0, 1);
                 if (i == 0)
                 {
-                    i = Randomization.Next(0, 4);
+                    i = Randomization.Next(0, 8);
                     if (CanMove(i) == -1)
                     {
                         //check if NPC is snared or stunned
@@ -994,7 +1026,7 @@ namespace Intersect.Server.Entities
                             }
                         }
 
-                        Move((byte) i, null);
+                        Move((byte)i, null);
                     }
                 }
 
@@ -1002,7 +1034,7 @@ namespace Intersect.Server.Entities
 
                 if (fleeing)
                 {
-                    LastRandomMove = Globals.Timing.Milliseconds + (long) GetMovementTime();
+                    LastRandomMove = Globals.Timing.Milliseconds + (long)GetMovementTime();
                 }
             }
 
@@ -1050,7 +1082,7 @@ namespace Intersect.Server.Entities
             {
                 if (en.GetType() == typeof(Npc))
                 {
-                    var npc = (Npc) en;
+                    var npc = (Npc)en;
                     if (npc.Target == null & npc.Base.Swarm && npc.Base == Base)
                     {
                         if (npc.InRangeOf(attacker, npc.Base.SightRange))
@@ -1149,7 +1181,7 @@ namespace Intersect.Server.Entities
                         //TODO Check if NPC is allowed to attack player with new conditions
                         if (entity.GetType() == typeof(Player))
                         {
-                            if (ShouldAttackPlayerOnSight((Player) entity))
+                            if (ShouldAttackPlayerOnSight((Player)entity))
                             {
                                 var dist = GetDistanceTo(entity);
                                 if (dist <= Range && dist < closestRange)
@@ -1162,7 +1194,7 @@ namespace Intersect.Server.Entities
                         }
                         else if (entity.GetType() == typeof(Npc))
                         {
-                            if (Base.Aggressive && Base.AggroList.Contains(((Npc) entity).Base.Id))
+                            if (Base.Aggressive && Base.AggroList.Contains(((Npc)entity).Base.Id))
                             {
                                 var dist = GetDistanceTo(entity);
                                 if (dist <= Range && dist < closestRange)
@@ -1199,7 +1231,7 @@ namespace Intersect.Server.Entities
                     continue;
                 }
 
-                var vitalId = (int) vital;
+                var vitalId = (int)vital;
                 var vitalValue = GetVital(vital);
                 var maxVitalValue = GetMaxVital(vital);
                 if (vitalValue >= maxVitalValue)
@@ -1208,7 +1240,7 @@ namespace Intersect.Server.Entities
                 }
 
                 var vitalRegenRate = Base.VitalRegen[vitalId] / 100f;
-                var regenValue = (int) Math.Max(1, maxVitalValue * vitalRegenRate) *
+                var regenValue = (int)Math.Max(1, maxVitalValue * vitalRegenRate) *
                                  Math.Abs(Math.Sign(vitalRegenRate));
 
                 AddVital(vital, regenValue);
@@ -1305,7 +1337,7 @@ namespace Intersect.Server.Entities
 
             packet = base.EntityPacket(packet, forPlayer);
 
-            var pkt = (NpcEntityPacket) packet;
+            var pkt = (NpcEntityPacket)packet;
             pkt.Aggression = GetAggression(forPlayer);
 
             return pkt;

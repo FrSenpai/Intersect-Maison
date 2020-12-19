@@ -219,10 +219,10 @@ namespace Intersect.Server.Entities.Pathfinding
                                                     //If this is a local event then we gotta loop through all other local events for the player
                                                     if (mEntity.GetType() == typeof(EventPageInstance))
                                                     {
-                                                        var ev = (EventPageInstance) mEntity;
+                                                        var ev = (EventPageInstance)mEntity;
                                                         if (!ev.Passable && ev.Player != null)
 
-                                                            //Make sure this is a local event
+                                                        //Make sure this is a local event
                                                         {
                                                             var player = ev.Player;
                                                             if (player != null)
@@ -447,29 +447,53 @@ namespace Intersect.Server.Entities.Pathfinding
                     {
                         var newX = enm.Current.X - Options.MapWidth;
                         var newY = enm.Current.Y - Options.MapHeight;
-                        if (mEntity.X < newX)
+                        if (mEntity.X < newX && mEntity.Y == newY)
                         {
                             enm.Dispose();
 
-                            return (int) Directions.Right;
+                            return (int)Directions.Right;
                         }
-                        else if (mEntity.X > newX)
+                        else if (mEntity.X > newX && mEntity.Y == newY)
                         {
                             enm.Dispose();
 
-                            return (int) Directions.Left;
+                            return (int)Directions.Left;
                         }
-                        else if (mEntity.Y < newY)
+                        else if (mEntity.Y < newY && mEntity.X == newX)
                         {
                             enm.Dispose();
 
-                            return (int) Directions.Down;
+                            return (int)Directions.Down;
                         }
-                        else if (mEntity.Y > newY)
+                        else if (mEntity.Y > newY && mEntity.X == newX)
                         {
                             enm.Dispose();
 
-                            return (int) Directions.Up;
+                            return (int)Directions.Up;
+                        }
+                        else if (mEntity.Y > newY && mEntity.X > newX)
+                        {
+                            enm.Dispose();
+
+                            return (int)Directions.UpLeft;
+                        }
+                        else if (mEntity.Y > newY && mEntity.X < newX)
+                        {
+                            enm.Dispose();
+
+                            return (int)Directions.UpRight;
+                        }
+                        else if (mEntity.Y < newY && mEntity.X > newX)
+                        {
+                            enm.Dispose();
+
+                            return (int)Directions.DownLeft;
+                        }
+                        else if (mEntity.Y < newY && mEntity.X < newX)
+                        {
+                            enm.Dispose();
+
+                            return (int)Directions.DownRight;
                         }
                     }
                 }

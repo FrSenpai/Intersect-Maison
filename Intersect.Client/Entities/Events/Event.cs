@@ -56,7 +56,7 @@ namespace Intersect.Client.Entities.Events
         public override void Load(EntityPacket packet)
         {
             base.Load(packet);
-            var pkt = (EventEntityPacket) packet;
+            var pkt = (EventEntityPacket)packet;
             DirectionFix = pkt.DirectionFix;
             WalkingAnim = pkt.WalkingAnim;
             DisablePreview = pkt.DisablePreview;
@@ -88,7 +88,7 @@ namespace Intersect.Client.Entities.Events
             {
                 return;
             }
-            
+
 
             var map = MapInstance.Get(CurrentMap);
             var srcRectangle = new FloatRect();
@@ -128,6 +128,27 @@ namespace Intersect.Client.Entities.Events
                                     break;
                                 case 3:
                                     d = 2;
+                                    break;
+                                case 4: // UpLeft
+                                    d = 1;
+
+                                    break;
+                                case 5: // UpRight
+                                    d = 2;
+
+                                    break;
+                                case 6: // DownLeft
+                                    d = 1;
+
+                                    break;
+                                case 7: // DownRight
+                                    d = 2;
+
+                                    break;
+
+                                default:
+                                    Dir = 0;
+                                    d = 3;
 
                                     break;
                             }
@@ -142,15 +163,15 @@ namespace Intersect.Client.Entities.Events
                         if (Options.AnimatedSprites.Contains(Graphic.Filename.ToLower()))
                         {
                             srcRectangle = new FloatRect(
-                                AnimationFrame * (int) entityTex.GetWidth() / Options.Instance.Sprites.NormalFrames, d * (int) entityTex.GetHeight() / Options.Instance.Sprites.Directions,
-                                (int) entityTex.GetWidth() / Options.Instance.Sprites.NormalFrames, (int) entityTex.GetHeight() / Options.Instance.Sprites.Directions
+                                AnimationFrame * (int)entityTex.GetWidth() / Options.Instance.Sprites.NormalFrames, d * (int)entityTex.GetHeight() / Options.Instance.Sprites.Directions,
+                                (int)entityTex.GetWidth() / Options.Instance.Sprites.NormalFrames, (int)entityTex.GetHeight() / Options.Instance.Sprites.Directions
                             );
                         }
                         else
                         {
                             srcRectangle = new FloatRect(
-                                frame * (int) srcTexture.GetWidth() / Options.Instance.Sprites.NormalFrames, d * (int) srcTexture.GetHeight() / Options.Instance.Sprites.Directions,
-                                (int) srcTexture.GetWidth() / Options.Instance.Sprites.NormalFrames, (int) srcTexture.GetHeight() / Options.Instance.Sprites.Directions
+                                frame * (int)srcTexture.GetWidth() / Options.Instance.Sprites.NormalFrames, d * (int)srcTexture.GetHeight() / Options.Instance.Sprites.Directions,
+                                (int)srcTexture.GetWidth() / Options.Instance.Sprites.NormalFrames, (int)srcTexture.GetHeight() / Options.Instance.Sprites.Directions
                             );
                         }
                     }
@@ -195,8 +216,8 @@ namespace Intersect.Client.Entities.Events
                 destRectangle.X -= (width - Options.TileWidth) / 2;
             }
 
-            destRectangle.X = (int) Math.Ceiling(destRectangle.X);
-            destRectangle.Y = (int) Math.Ceiling(destRectangle.Y);
+            destRectangle.X = (int)Math.Ceiling(destRectangle.X);
+            destRectangle.Y = (int)Math.Ceiling(destRectangle.Y);
             destRectangle.Width = srcRectangle.Width;
             destRectangle.Height = srcRectangle.Height;
             WorldPos = destRectangle;
@@ -301,8 +322,8 @@ namespace Intersect.Client.Entities.Events
                 return;
             }
 
-            var y = (int) Math.Ceiling(GetCenterPos().Y);
-            var x = (int) Math.Ceiling(GetCenterPos().X);
+            var y = (int)Math.Ceiling(GetCenterPos().Y);
+            var x = (int)Math.Ceiling(GetCenterPos().X);
             var height = Options.TileHeight;
             switch (Graphic.Type)
             {
@@ -334,8 +355,8 @@ namespace Intersect.Client.Entities.Events
                     break;
             }
 
-            y = (int) GetTopPos(height) - 12;
-            x = (int) Math.Ceiling(GetCenterPos().X);
+            y = (int)GetTopPos(height) - 12;
+            x = (int)Math.Ceiling(GetCenterPos().X);
 
             if (Graphic.Type == EventGraphicType.Tileset)
             {
@@ -354,7 +375,7 @@ namespace Intersect.Client.Entities.Events
             }
 
             Graphics.Renderer.DrawString(
-                Name, Graphics.EntityNameFont, (int) (x - (int) Math.Ceiling(textSize.X / 2f)), (int) y, 1,
+                Name, Graphics.EntityNameFont, (int)(x - (int)Math.Ceiling(textSize.X / 2f)), (int)y, 1,
                 Color.FromArgb(CustomColors.Names.Events.Name.ToArgb()), true, null,
                 Color.FromArgb(CustomColors.Names.Events.Outline.ToArgb())
             );

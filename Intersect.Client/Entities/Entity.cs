@@ -101,7 +101,7 @@ namespace Intersect.Client.Entities
         public int Level = 1;
 
         //Vitals & Stats
-        public int[] MaxVital = new int[(int) Vitals.VitalCount];
+        public int[] MaxVital = new int[(int)Vitals.VitalCount];
 
         protected Pointf mCenterPos = Pointf.Empty;
 
@@ -109,6 +109,8 @@ namespace Intersect.Client.Entities
         private List<ChatBubble> mChatBubbles = new List<ChatBubble>();
 
         private byte mDir;
+
+        //private byte mDeplDir;
 
         protected bool mDisposed;
 
@@ -145,7 +147,7 @@ namespace Intersect.Client.Entities
 
         public Spell[] Spells = new Spell[Options.MaxPlayerSkills];
 
-        public int[] Stat = new int[(int) Stats.StatCount];
+        public int[] Stat = new int[(int)Stats.StatCount];
 
         public int Target = -1;
 
@@ -154,7 +156,7 @@ namespace Intersect.Client.Entities
         #region "Animation Textures and Timing"
         public SpriteAnimations SpriteAnimation = SpriteAnimations.Normal;
 
-        public Dictionary<SpriteAnimations,GameTexture> AnimatedTextures = new Dictionary<SpriteAnimations, GameTexture>();
+        public Dictionary<SpriteAnimations, GameTexture> AnimatedTextures = new Dictionary<SpriteAnimations, GameTexture>();
 
         public int SpriteFrame = 0;
 
@@ -165,7 +167,7 @@ namespace Intersect.Client.Entities
 
         public int Type;
 
-        public int[] Vital = new int[(int) Vitals.VitalCount];
+        public int[] Vital = new int[(int)Vitals.VitalCount];
 
         public int WalkFrame;
 
@@ -222,8 +224,17 @@ namespace Intersect.Client.Entities
         public byte Dir
         {
             get => mDir;
-            set => mDir = (byte) ((value + 4) % 4);
+            set => mDir = (byte)((value + 8) % 8);
         }
+
+        // DeplacementDir is used because I don't know how to set the sprite animation for the diagonal mouvement.
+        //public byte DeplacementDir
+        //{
+        //    get => mDeplDir;
+        //    set => mDeplDir = (byte)((value + 8) % 8);
+        //    // I don't know why there was a +4 % 4 for the Dir field, but I just repeated the same thing here.
+        //    // I guess it's to be sure the value is in the acceptable range.
+        //}
 
         public virtual string TransformedSprite
         {
@@ -463,13 +474,14 @@ namespace Intersect.Client.Entities
         //Returns the amount of time required to traverse 1 tile
         public virtual float GetMovementTime()
         {
-            var time = 1000f / (float) (1 + Math.Log(Stat[(int) Stats.Speed]));
-            if (Running == 1){
+            var time = 1000f / (float)(1 + Math.Log(Stat[(int)Stats.Speed]));
+            if (Running == 1)
+            {
                 time *= 0.5f;
             }
             if (Blocking)
             {
-                time += time * (float) Options.BlockingSlow;
+                time += time * (float)Options.BlockingSlow;
             }
 
             return Math.Min(1000f, time);
@@ -503,7 +515,7 @@ namespace Intersect.Client.Entities
                 mLastUpdate = Globals.System.GetTimeMs();
             }
 
-            var ecTime = (float) (Globals.System.GetTimeMs() - mLastUpdate);
+            var ecTime = (float)(Globals.System.GetTimeMs() - mLastUpdate);
             elapsedtime = ecTime;
             if (Dashing != null)
             {
@@ -560,10 +572,16 @@ namespace Intersect.Client.Entities
             }
             else if (IsMoving)
             {
+                float deplacementTime = ecTime * Options.TileHeight / GetMovementTime();
+
+                // Dir = facing direction (only 4)
+                // delta offset Must be more than 0 for movements. 0 = slowest
+                // Direction is related to the sprite animation, I don't know how to set a sprite animation for eache direction
+                // so I use DeplacementDir...
                 switch (Dir)
                 {
                     case 0:
-                        OffsetY -= (float) ecTime * (float) Options.TileHeight / GetMovementTime();
+                        OffsetY -= deplacementTime;
                         OffsetX = 0;
                         if (OffsetY < 0)
                         {
@@ -573,7 +591,7 @@ namespace Intersect.Client.Entities
                         break;
 
                     case 1:
-                        OffsetY += (float) ecTime * (float) Options.TileHeight / GetMovementTime();
+                        OffsetY += deplacementTime;
                         OffsetX = 0;
                         if (OffsetY > 0)
                         {
@@ -583,7 +601,7 @@ namespace Intersect.Client.Entities
                         break;
 
                     case 2:
-                        OffsetX -= (float) ecTime * (float) Options.TileHeight / GetMovementTime();
+                        OffsetX -= deplacementTime;
                         OffsetY = 0;
                         if (OffsetX < 0)
                         {
@@ -593,12 +611,52 @@ namespace Intersect.Client.Entities
                         break;
 
                     case 3:
-                        OffsetX += (float) ecTime * (float) Options.TileHeight / GetMovementTime();
+                        OffsetX += deplacementTime;
                         OffsetY = 0;
                         if (OffsetX > 0)
                         {
                             OffsetX = 0;
                         }
+
+                        break;
+                    case 4: // NW     
+                        OffsetY -= deplacementTime;
+                        OffsetX -= deplacementTime;
+
+                        if (OffsetY < 0)
+                            OffsetY = 0;
+                        if (OffsetX < 0)
+                            OffsetX = 0;
+
+                        break;
+                    case 5: // NE
+                        OffsetY -= deplacementTime;
+                        OffsetX += deplacementTime;
+
+                        if (OffsetY < 0)
+                            OffsetY = 0;
+                        if (OffsetX > 0)
+                            OffsetX = 0;
+
+                        break;
+                    case 6: //SW
+                        OffsetY += deplacementTime;
+                        OffsetX -= deplacementTime;
+
+                        if (OffsetY > 0)
+                            OffsetY = 0;
+                        if (OffsetX < 0)
+                            OffsetX = 0;
+
+                        break;
+                    case 7: // SE
+                        OffsetY += deplacementTime;
+                        OffsetX += deplacementTime;
+
+                        if (OffsetY > 0)
+                            OffsetY = 0;
+                        if (OffsetX > 0)
+                            OffsetX = 0;
 
                         break;
                 }
@@ -726,14 +784,14 @@ namespace Intersect.Client.Entities
                 if (animInstance.AutoRotate)
                 {
                     animInstance.SetPosition(
-                        (int) Math.Ceiling(GetCenterPos().X), (int) Math.Ceiling(GetCenterPos().Y), X, Y, CurrentMap,
+                        (int)Math.Ceiling(GetCenterPos().X), (int)Math.Ceiling(GetCenterPos().Y), X, Y, CurrentMap,
                         Dir, Z
                     );
                 }
                 else
                 {
                     animInstance.SetPosition(
-                        (int) Math.Ceiling(GetCenterPos().X), (int) Math.Ceiling(GetCenterPos().Y), X, Y, CurrentMap,
+                        (int)Math.Ceiling(GetCenterPos().X), (int)Math.Ceiling(GetCenterPos().Y), X, Y, CurrentMap,
                         -1, Z
                     );
                 }
@@ -763,10 +821,10 @@ namespace Intersect.Client.Entities
             }
 
             //Otherwise return the legacy attack speed calculation
-            return (int) (Options.MaxAttackRate +
-                          (float) ((Options.MinAttackRate - Options.MaxAttackRate) *
-                                   (((float) Options.MaxStatValue - Stat[(int) Stats.Speed]) /
-                                    (float) Options.MaxStatValue)));
+            return (int)(Options.MaxAttackRate +
+                          (float)((Options.MinAttackRate - Options.MaxAttackRate) *
+                                   (((float)Options.MaxStatValue - Stat[(int)Stats.Speed]) /
+                                    (float)Options.MaxStatValue)));
         }
 
         public virtual bool IsStealthed()
@@ -934,6 +992,22 @@ namespace Intersect.Client.Entities
                         d = 2;
 
                         break;
+                    case 4: // UpLeft
+                        d = 1;
+
+                        break;
+                    case 5: // UpRight
+                        d = 2;
+
+                        break;
+                    case 6: // DownLeft
+                        d = 1;
+
+                        break;
+                    case 7: // DownRight
+                        d = 2;
+
+                        break;
                     default:
                         Dir = 0;
                         d = 3;
@@ -966,8 +1040,8 @@ namespace Intersect.Client.Entities
                         {
                             //Restore Original Attacking/Blocking Code
                             srcRectangle = new FloatRect(
-                                WalkFrame * (int) texture.GetWidth() / SpriteFrames, d * (int) texture.GetHeight() / Options.Instance.Sprites.Directions,
-                                (int) texture.GetWidth() / SpriteFrames, (int) texture.GetHeight() / Options.Instance.Sprites.Directions
+                                WalkFrame * (int)texture.GetWidth() / SpriteFrames, d * (int)texture.GetHeight() / Options.Instance.Sprites.Directions,
+                                (int)texture.GetWidth() / SpriteFrames, (int)texture.GetHeight() / Options.Instance.Sprites.Directions
                             );
                         }
                     }
@@ -987,11 +1061,20 @@ namespace Intersect.Client.Entities
                 //    new Intersect.Color(alpha, 255, 255, 255));
 
                 WorldPos = destRectangle;
+                int pDollIndex = Dir; // Actually it's because the index would've been outside of the bounds
+                if (Dir == 4 || Dir == 6)
+                {
+                    pDollIndex = 2;
+                }
+                else if (Dir == 5 || Dir == 7)
+                {
+                    pDollIndex = 3;
+                }
 
                 //Order the layers of paperdolls and sprites
-                for (var z = 0; z < Options.PaperdollOrder[Dir].Count; z++)
+                for (var z = 0; z < Options.PaperdollOrder[pDollIndex].Count; z++)
                 {
-                    var paperdoll = Options.PaperdollOrder[Dir][z];
+                    var paperdoll = Options.PaperdollOrder[pDollIndex][z];
                     var equipSlot = Options.EquipmentSlots.IndexOf(paperdoll);
 
                     //Check for player
@@ -1112,12 +1195,27 @@ namespace Intersect.Client.Entities
                         break;
                     case 3:
                         d = 2;
+                        break;
+                    case 4:
+                        d = 1;
+
+                        break;
+                    case 5:
+                        d = 2;
+
+                        break;
+                    case 6:
+                        d = 1;
+
+                        break;
+                    case 7:
+                        d = 2;
 
                         break;
                 }
 
-                destRectangle.X = (int) Math.Ceiling(destRectangle.X);
-                destRectangle.Y = (int) Math.Ceiling(destRectangle.Y);
+                destRectangle.X = (int)Math.Ceiling(destRectangle.X);
+                destRectangle.Y = (int)Math.Ceiling(destRectangle.Y);
                 if (SpriteAnimation == SpriteAnimations.Normal)
                 {
                     if (AttackTimer - CalculateAttackTime() / 2 > Timing.Global.Ticks / TimeSpan.TicksPerMillisecond || Blocking)
@@ -1130,8 +1228,8 @@ namespace Intersect.Client.Entities
                     else
                     {
                         srcRectangle = new FloatRect(
-                            WalkFrame * (int) paperdollTex.GetWidth() / spriteFrames, d * (int) paperdollTex.GetHeight() / Options.Instance.Sprites.Directions,
-                            (int) paperdollTex.GetWidth() / spriteFrames, (int) paperdollTex.GetHeight() / Options.Instance.Sprites.Directions
+                            WalkFrame * (int)paperdollTex.GetWidth() / spriteFrames, d * (int)paperdollTex.GetHeight() / Options.Instance.Sprites.Directions,
+                            (int)paperdollTex.GetWidth() / spriteFrames, (int)paperdollTex.GetHeight() / Options.Instance.Sprites.Directions
                         );
                     }
                 }
@@ -1186,17 +1284,17 @@ namespace Intersect.Client.Entities
                 return 0f;
             }
 
-            var y = (int) Math.Ceiling(GetCenterPos().Y);
+            var y = (int)Math.Ceiling(GetCenterPos().Y);
             if (overrideHeight != 0)
             {
-                y = y - (int) (overrideHeight / (Options.Instance.Sprites.Directions * 2));
+                y = y - (int)(overrideHeight / (Options.Instance.Sprites.Directions * 2));
                 y -= 12;
             }
             else
             {
                 if (Texture != null)
                 {
-                    y = y - (int) (Texture.GetHeight() / (Options.Instance.Sprites.Directions * 2));
+                    y = y - (int)(Texture.GetHeight() / (Options.Instance.Sprites.Directions * 2));
                     y -= 12;
                 }
             }
@@ -1270,7 +1368,7 @@ namespace Intersect.Client.Entities
 
             var textSize = Graphics.Renderer.MeasureText(label, Graphics.EntityNameFont, 1);
 
-            var x = (int) Math.Ceiling(GetCenterPos().X);
+            var x = (int)Math.Ceiling(GetCenterPos().X);
             var y = position == 0 ? GetLabelLocation(LabelType.Header) : GetLabelLocation(LabelType.Footer);
 
             if (backgroundColor != Color.Transparent)
@@ -1282,7 +1380,7 @@ namespace Intersect.Client.Entities
             }
 
             Graphics.Renderer.DrawString(
-                label, Graphics.EntityNameFont, (int) (x - (int) Math.Ceiling(textSize.X / 2f)), (int) y, 1,
+                label, Graphics.EntityNameFont, (int)(x - (int)Math.Ceiling(textSize.X / 2f)), (int)y, 1,
                 Color.FromArgb(textColor.ToArgb()), true, null, Color.FromArgb(borderColor.ToArgb())
             );
         }
@@ -1362,7 +1460,7 @@ namespace Intersect.Client.Entities
 
             var textSize = Graphics.Renderer.MeasureText(Name, Graphics.EntityNameFont, 1);
 
-            var x = (int) Math.Ceiling(GetCenterPos().X);
+            var x = (int)Math.Ceiling(GetCenterPos().X);
             var y = GetLabelLocation(LabelType.Name);
 
             if (backgroundColor != Color.Transparent)
@@ -1374,7 +1472,7 @@ namespace Intersect.Client.Entities
             }
 
             Graphics.Renderer.DrawString(
-                Name, Graphics.EntityNameFont, (int) (x - (int) Math.Ceiling(textSize.X / 2f)), (int) y, 1,
+                Name, Graphics.EntityNameFont, (int)(x - (int)Math.Ceiling(textSize.X / 2f)), (int)y, 1,
                 Color.FromArgb(textColor.ToArgb()), true, null, Color.FromArgb(borderColor.ToArgb())
             );
         }
@@ -1434,12 +1532,12 @@ namespace Intersect.Client.Entities
                 return;
             }
 
-            if (Vital[(int) Vitals.Health] <= 0)
+            if (Vital[(int)Vitals.Health] <= 0)
             {
                 return;
             }
 
-            var maxVital = MaxVital[(int) Vitals.Health];
+            var maxVital = MaxVital[(int)Vitals.Health];
             var shieldSize = 0;
 
             //Check for shields
@@ -1447,17 +1545,17 @@ namespace Intersect.Client.Entities
             {
                 if (status.Type == StatusTypes.Shield)
                 {
-                    shieldSize += status.Shield[(int) Vitals.Health];
-                    maxVital += status.Shield[(int) Vitals.Health];
+                    shieldSize += status.Shield[(int)Vitals.Health];
+                    maxVital += status.Shield[(int)Vitals.Health];
                 }
             }
 
-            if (shieldSize + Vital[(int) Vitals.Health] > maxVital)
+            if (shieldSize + Vital[(int)Vitals.Health] > maxVital)
             {
-                maxVital = shieldSize + Vital[(int) Vitals.Health];
+                maxVital = shieldSize + Vital[(int)Vitals.Health];
             }
 
-            if (Vital[(int) Vitals.Health] == MaxVital[(int) Vitals.Health] && shieldSize <= 0)
+            if (Vital[(int)Vitals.Health] == MaxVital[(int)Vitals.Health] && shieldSize <= 0)
             {
                 return;
             }
@@ -1483,20 +1581,20 @@ namespace Intersect.Client.Entities
 
             var width = Options.TileWidth;
 
-            var hpfillRatio = (float) Vital[(int) Vitals.Health] / maxVital;
+            var hpfillRatio = (float)Vital[(int)Vitals.Health] / maxVital;
             hpfillRatio = Math.Min(1, Math.Max(0, hpfillRatio));
-            var hpfillWidth = (float) Math.Ceiling(hpfillRatio * width);
+            var hpfillWidth = (float)Math.Ceiling(hpfillRatio * width);
 
-            var shieldfillRatio = (float) shieldSize / maxVital;
+            var shieldfillRatio = (float)shieldSize / maxVital;
             shieldfillRatio = Math.Min(1, Math.Max(0, shieldfillRatio));
-            var shieldfillWidth = (float) Math.Floor(shieldfillRatio * width);
+            var shieldfillWidth = (float)Math.Floor(shieldfillRatio * width);
 
-            var y = (int) Math.Ceiling(GetCenterPos().Y);
-            var x = (int) Math.Ceiling(GetCenterPos().X);
+            var y = (int)Math.Ceiling(GetCenterPos().Y);
+            var x = (int)Math.Ceiling(GetCenterPos().X);
             var entityTex = Globals.ContentManager.GetTexture(GameContentManager.TextureType.Entity, MySprite);
             if (entityTex != null)
             {
-                y = y - (int) (entityTex.GetHeight() / (Options.Instance.Sprites.Directions * 2));
+                y = y - (int)(entityTex.GetHeight() / (Options.Instance.Sprites.Directions * 2));
                 y -= 8;
             }
 
@@ -1513,7 +1611,7 @@ namespace Intersect.Client.Entities
             {
                 Graphics.DrawGameTexture(
                     hpBackground, new FloatRect(0, 0, hpBackground.GetWidth(), hpBackground.GetHeight()),
-                    new FloatRect((int) (x - width / 2), (int) (y - 1), width, 6), Color.White
+                    new FloatRect((int)(x - width / 2), (int)(y - 1), width, 6), Color.White
                 );
             }
 
@@ -1521,7 +1619,7 @@ namespace Intersect.Client.Entities
             {
                 Graphics.DrawGameTexture(
                     hpForeground, new FloatRect(0, 0, hpfillWidth, hpForeground.GetHeight()),
-                    new FloatRect((int) (x - width / 2), (int) (y - 1), hpfillWidth, 6), Color.White
+                    new FloatRect((int)(x - width / 2), (int)(y - 1), hpfillWidth, 6), Color.White
                 );
             }
 
@@ -1529,8 +1627,8 @@ namespace Intersect.Client.Entities
             {
                 Graphics.DrawGameTexture(
                     shieldForeground,
-                    new FloatRect((float) (width - shieldfillWidth), 0, shieldfillWidth, shieldForeground.GetHeight()),
-                    new FloatRect((int) (x - width / 2) + hpfillWidth, (int) (y - 1), shieldfillWidth, 6), Color.White
+                    new FloatRect((float)(width - shieldfillWidth), 0, shieldfillWidth, shieldForeground.GetHeight()),
+                    new FloatRect((int)(x - width / 2) + hpfillWidth, (int)(y - 1), shieldfillWidth, 6), Color.White
                 );
             }
         }
@@ -1552,15 +1650,15 @@ namespace Intersect.Client.Entities
             {
                 var width = Options.TileWidth;
                 var fillratio = (castSpell.CastDuration - (CastTime - Globals.System.GetTimeMs())) /
-                                (float) castSpell.CastDuration;
+                                (float)castSpell.CastDuration;
 
                 var castFillWidth = fillratio * width;
-                var y = (int) Math.Ceiling(GetCenterPos().Y);
-                var x = (int) Math.Ceiling(GetCenterPos().X);
+                var y = (int)Math.Ceiling(GetCenterPos().Y);
+                var x = (int)Math.Ceiling(GetCenterPos().X);
                 var entityTex = Globals.ContentManager.GetTexture(GameContentManager.TextureType.Entity, MySprite);
                 if (entityTex != null)
                 {
-                    y = y + (int) (entityTex.GetHeight() / (Options.Instance.Sprites.Directions * 2));
+                    y = y + (int)(entityTex.GetHeight() / (Options.Instance.Sprites.Directions * 2));
                     y += 3;
                 }
 
@@ -1576,7 +1674,7 @@ namespace Intersect.Client.Entities
                 {
                     Graphics.DrawGameTexture(
                         castBackground, new FloatRect(0, 0, castBackground.GetWidth(), castBackground.GetHeight()),
-                        new FloatRect((int) (x - width / 2), (int) (y - 1), width, 6), Color.White
+                        new FloatRect((int)(x - width / 2), (int)(y - 1), width, 6), Color.White
                     );
                 }
 
@@ -1585,7 +1683,7 @@ namespace Intersect.Client.Entities
                     Graphics.DrawGameTexture(
                         castForeground,
                         new FloatRect(0, 0, castForeground.GetWidth() * fillratio, castForeground.GetHeight()),
-                        new FloatRect((int) (x - width / 2), (int) (y - 1), castFillWidth, 6), Color.White
+                        new FloatRect((int)(x - width / 2), (int)(y - 1), castFillWidth, 6), Color.White
                     );
                 }
             }
@@ -1610,12 +1708,12 @@ namespace Intersect.Client.Entities
             var targetTex = Globals.ContentManager.GetTexture(GameContentManager.TextureType.Misc, "target.png");
             if (targetTex != null)
             {
-                destRectangle.X = GetCenterPos().X - (int) targetTex.GetWidth() / 4;
-                destRectangle.Y = GetCenterPos().Y - (int) targetTex.GetHeight() / 2;
+                destRectangle.X = GetCenterPos().X - (int)targetTex.GetWidth() / 4;
+                destRectangle.Y = GetCenterPos().Y - (int)targetTex.GetHeight() / 2;
 
                 srcRectangle = new FloatRect(
-                    priority * (int) targetTex.GetWidth() / 2, 0, (int) targetTex.GetWidth() / 2,
-                    (int) targetTex.GetHeight()
+                    priority * (int)targetTex.GetWidth() / 2, 0, (int)targetTex.GetWidth() / 2,
+                    (int)targetTex.GetHeight()
                 );
 
                 destRectangle.Width = srcRectangle.Width;

@@ -45,8 +45,8 @@ namespace Intersect.Client.Entities.Projectiles
         /// </summary>
         public Projectile(Guid id, ProjectileEntityPacket packet) : base(id, packet)
         {
-            Vital[(int) Vitals.Health] = 1;
-            MaxVital[(int) Vitals.Health] = 1;
+            Vital[(int)Vitals.Health] = 1;
+            MaxVital[(int)Vitals.Health] = 1;
             HideName = true;
             Passable = true;
             IsMoving = true;
@@ -60,7 +60,7 @@ namespace Intersect.Client.Entities.Projectiles
             }
 
             base.Load(packet);
-            var pkt = (ProjectileEntityPacket) packet;
+            var pkt = (ProjectileEntityPacket)packet;
             ProjectileId = pkt.ProjectileId;
             Dir = pkt.ProjectileDirection;
             TargetId = pkt.TargetId;
@@ -198,6 +198,14 @@ namespace Intersect.Client.Entities.Projectiles
                     return -y;
                 default:
                     return x;
+                case 4: //UpLeft
+                    return y;
+                case 5: //UpRight
+                    return -y;
+                case 6: //DownLeft
+                    return y;
+                case 7: //DownRight
+                    return -y;
             }
         }
 
@@ -212,6 +220,14 @@ namespace Intersect.Client.Entities.Projectiles
                 case 2: //Left
                     return -x;
                 case 3: //Right
+                    return x;
+                case 4: //UpLeft
+                    return -x;
+                case 5: //UpRight
+                    return x;
+                case 6: //DownLeft
+                    return -x;
+                case 7: //DownRight
                     return x;
                 default:
                     return y;
@@ -290,6 +306,94 @@ namespace Intersect.Client.Entities.Projectiles
                         default:
                             return projectionDir;
                     }
+                case 4: //UpLeft
+                    switch (projectionDir)
+                    {
+                        case 0: //Up
+                            return 2;
+                        case 1: //Down
+                            return 3;
+                        case 2: //Left
+                            return 1;
+                        case 3: //Right
+                            return 0;
+                        case 4: //UpLeft
+                            return 6;
+                        case 5: //UpRight
+                            return 4;
+                        case 6: //DownLeft
+                            return 7;
+                        case 7: //DownRight
+                            return 5;
+                        default:
+                            return projectionDir;
+                    }
+                case 5: //UpRight
+                    switch (projectionDir)
+                    {
+                        case 0: //Up
+                            return 3;
+                        case 1: //Down
+                            return 2;
+                        case 2: //Left
+                            return 0;
+                        case 3: //Right
+                            return 1;
+                        case 4: //UpLeft
+                            return 5;
+                        case 5: //UpRight
+                            return 7;
+                        case 6: //DownLeft
+                            return 4;
+                        case 7: //DownRight
+                            return 6;
+                        default:
+                            return projectionDir;
+                    }
+                case 6: //DownLeft
+                    switch (projectionDir)
+                    {
+                        case 0: //Up
+                            return 2;
+                        case 1: //Down
+                            return 3;
+                        case 2: //Left
+                            return 1;
+                        case 3: //Right
+                            return 0;
+                        case 4: //UpLeft
+                            return 6;
+                        case 5: //UpRight
+                            return 4;
+                        case 6: //DownLeft
+                            return 7;
+                        case 7: //DownRight
+                            return 5;
+                        default:
+                            return projectionDir;
+                    }
+                case 7: //DownRight
+                    switch (projectionDir)
+                    {
+                        case 0: //Up
+                            return 3;
+                        case 1: //Down
+                            return 2;
+                        case 2: //Left
+                            return 0;
+                        case 3: //Right
+                            return 1;
+                        case 4: //UpLeft
+                            return 5;
+                        case 5: //UpRight
+                            return 7;
+                        case 6: //DownLeft
+                            return 4;
+                        case 7: //DownRight
+                            return 6;
+                        default:
+                            return projectionDir;
+                    }
                 default:
                     return projectionDir;
             }
@@ -344,7 +448,7 @@ namespace Intersect.Client.Entities.Projectiles
         private float GetDisplacement(long spawnTime)
         {
             var elapsedTime = Globals.System.GetTimeMs() - spawnTime;
-            var displacementPercent = elapsedTime / (float) mMyBase.Speed;
+            var displacementPercent = elapsedTime / (float)mMyBase.Speed;
 
             return displacementPercent * Options.TileHeight * mMyBase.Range;
         }
@@ -413,8 +517,8 @@ namespace Intersect.Client.Entities.Projectiles
                         var spawnMap = MapInstance.Get(Spawns[i].MapId);
                         if (spawnMap != null)
                         {
-                            var newx = Spawns[i].X + (int) GetRangeX(Spawns[i].Dir, 1);
-                            var newy = Spawns[i].Y + (int) GetRangeY(Spawns[i].Dir, 1);
+                            var newx = Spawns[i].X + (int)GetRangeX(Spawns[i].Dir, 1);
+                            var newy = Spawns[i].Y + (int)GetRangeY(Spawns[i].Dir, 1);
                             var newMapId = Spawns[i].MapId;
                             var killSpawn = false;
 
@@ -491,12 +595,12 @@ namespace Intersect.Client.Entities.Projectiles
                             {
                                 if (newMap.Attributes[Spawns[i].X, Spawns[i].Y].Type == MapAttributes.ZDimension)
                                 {
-                                    if (((MapZDimensionAttribute) newMap.Attributes[Spawns[i].X, Spawns[i].Y])
+                                    if (((MapZDimensionAttribute)newMap.Attributes[Spawns[i].X, Spawns[i].Y])
                                         .GatewayTo >
                                         0)
                                     {
                                         Spawns[i].Z =
-                                            ((MapZDimensionAttribute) newMap.Attributes[Spawns[i].X, Spawns[i].Y])
+                                            ((MapZDimensionAttribute)newMap.Attributes[Spawns[i].X, Spawns[i].Y])
                                             .GatewayTo -
                                             1;
                                     }
@@ -509,7 +613,7 @@ namespace Intersect.Client.Entities.Projectiles
                             }
 
                             Spawns[i].TransmittionTimer = Globals.System.GetTimeMs() +
-                                                          (long) ((float) mMyBase.Speed / (float) mMyBase.Range);
+                                                          (long)((float)mMyBase.Speed / (float)mMyBase.Range);
 
                             if (Spawns[i].Distance >= mMyBase.Range)
                             {

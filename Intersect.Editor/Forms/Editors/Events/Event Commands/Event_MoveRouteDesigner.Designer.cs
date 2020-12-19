@@ -427,11 +427,11 @@ namespace Intersect.Editor.Forms.Editors.Events.Event_Commands
             this.cmbTarget.Name = "cmbTarget";
             this.cmbTarget.Size = new System.Drawing.Size(191, 21);
             this.cmbTarget.TabIndex = 0;
-            this.cmbTarget.Text = null;
+            this.cmbTarget.Text = "Self";
             this.cmbTarget.TextPadding = new System.Windows.Forms.Padding(2);
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.cmbTarget_SelectedIndexChanged);
             // 
-            // Event_MoveRouteDesigner
+            // EventMoveRouteDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

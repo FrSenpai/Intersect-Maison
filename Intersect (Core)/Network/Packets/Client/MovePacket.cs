@@ -25,6 +25,8 @@ namespace Intersect.Network.Packets.Client
         public byte Run { get; set; }
 
 
+
+
     }
 
 }

@@ -372,7 +372,6 @@ namespace Intersect.Editor.Forms.Editors.Events.Event_Commands
                 }
             }
         }
-
     }
 
 }

@@ -133,7 +133,7 @@ namespace Intersect.Server.Entities.Pathfinding
 
             if (startNode == endNode)
             {
-                return new LinkedList<PathNode>(new PathNode[] {startNode});
+                return new LinkedList<PathNode>(new PathNode[] { startNode });
             }
 
             var neighborNodes = new PathNode[8];
@@ -282,7 +282,41 @@ namespace Intersect.Server.Entities.Pathfinding
             var x = inAround.X;
             var y = inAround.Y;
 
-            inNeighbors[0] = null;
+            if (y > 0 && x > 0)
+            {
+                inNeighbors[0] = mSearchSpace[x - 1, y - 1]; // UpLeft
+            }
+            else
+            {
+                inNeighbors[0] = null;
+            }
+
+            if (y > 0 && x < Width - 1)
+            {
+                inNeighbors[2] = mSearchSpace[x + 1, y - 1]; // UpRight
+            }
+            else
+            {
+                inNeighbors[2] = null;
+            }
+
+            if (y < Height - 1 && x > 0)
+            {
+                inNeighbors[5] = mSearchSpace[x - 1, y + 1]; // DownLeft
+            }
+            else
+            {
+                inNeighbors[5] = null;
+            }
+
+            if (y < Height - 1 && x < Width - 1)
+            {
+                inNeighbors[7] = mSearchSpace[x + 1, y + 1]; // DownRight
+            }
+            else
+            {
+                inNeighbors[7] = null;
+            }
 
             if (y > 0)
             {
@@ -293,7 +327,7 @@ namespace Intersect.Server.Entities.Pathfinding
                 inNeighbors[1] = null;
             }
 
-            inNeighbors[2] = null;
+
 
             if (x > 0)
             {
@@ -313,7 +347,7 @@ namespace Intersect.Server.Entities.Pathfinding
                 inNeighbors[4] = null;
             }
 
-            inNeighbors[5] = null;
+
 
             if (y < Height - 1)
             {
@@ -324,7 +358,7 @@ namespace Intersect.Server.Entities.Pathfinding
                 inNeighbors[6] = null;
             }
 
-            inNeighbors[7] = null;
+
         }
 
         private class OpenCloseMap

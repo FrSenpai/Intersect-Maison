@@ -221,7 +221,7 @@ namespace Intersect.Server.Networking
             if (packet is AbstractTimedPacket timedPacket)
             {
                 var ping = connection.Statistics.Ping;
-                var ncPing = (long) Math.Ceiling(
+                var ncPing = (long)Math.Ceiling(
                     (connection as LidgrenConnection).NetConnection.AverageRoundtripTime * 1000
                 );
 
@@ -347,7 +347,7 @@ namespace Intersect.Server.Networking
 
             try
             {
-                HandlePacket(client, client.Entity, (dynamic) packet);
+                HandlePacket(client, client.Entity, (dynamic)packet);
             }
             catch (Exception exception)
             {
@@ -710,7 +710,7 @@ namespace Intersect.Server.Networking
                 msg = msg.Remove(0, cmd.Length);
             }
 
-            var msgSplit = msg.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            var msgSplit = msg.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (cmd == Strings.Chat.localcmd)
             {
@@ -741,7 +741,7 @@ namespace Intersect.Server.Networking
                     );
                 }
 
-                PacketSender.SendChatBubble(player.Id, (int) EntityTypes.GlobalEntity, msg, player.MapId);
+                PacketSender.SendChatBubble(player.Id, (int)EntityTypes.GlobalEntity, msg, player.MapId);
             }
             else if (cmd == Strings.Chat.allcmd || cmd == Strings.Chat.globalcmd)
             {
@@ -887,10 +887,10 @@ namespace Intersect.Server.Networking
                 //Search for command activated events and run them
                 foreach (var evt in EventBase.Lookup)
                 {
-                    if ((EventBase) evt.Value != null)
+                    if ((EventBase)evt.Value != null)
                     {
                         if (client.Entity.StartCommonEvent(
-                                (EventBase) evt.Value, CommonEventTrigger.SlashCommand, cmd.TrimStart('/'), msg
+                                (EventBase)evt.Value, CommonEventTrigger.SlashCommand, cmd.TrimStart('/'), msg
                             ) ==
                             true)
                         {
@@ -1025,6 +1025,22 @@ namespace Intersect.Server.Networking
                     attackingTile.Translate(1, 0);
 
                     break;
+                case 4:
+                    attackingTile.Translate(-1, -1); // UpLeft
+
+                    break;
+                case 5:
+                    attackingTile.Translate(1, -1); // UpRight
+
+                    break;
+                case 6:
+                    attackingTile.Translate(-1, 1); // DownLeft
+
+                    break;
+                case 7:
+                    attackingTile.Translate(1, 1); // DownRight
+
+                    break;
             }
 
             PacketSender.SendEntityAttack(player, player.CalculateAttackTime());
@@ -1047,7 +1063,7 @@ namespace Intersect.Server.Networking
                     {
                         PacketSender.SendAnimationToProximity(
                             attackAnim.Id, -1, Guid.Empty, attackingTile.GetMapId(), attackingTile.GetX(),
-                            attackingTile.GetY(), (sbyte) player.Dir
+                            attackingTile.GetY(), (sbyte)player.Dir
                         );
                     }
 
@@ -1101,8 +1117,8 @@ namespace Intersect.Server.Networking
 #endif
                         MapInstance.Get(player.MapId)
                             .SpawnMapProjectile(
-                                player, projectileBase, null, weaponItem, player.MapId, (byte) player.X,
-                                (byte) player.Y, (byte) player.Z, (byte) player.Dir, null
+                                player, projectileBase, null, weaponItem, player.MapId, (byte)player.X,
+                                (byte)player.Y, (byte)player.Z, (byte)player.Dir, null
                             );
 
                         player.AttackTimer = Globals.Timing.Milliseconds + latencyAdjustmentMs + player.CalculateAttackTime();
@@ -1145,7 +1161,7 @@ namespace Intersect.Server.Networking
                     {
                         PacketSender.SendAnimationToProximity(
                             classBase.AttackAnimationId, -1, Guid.Empty, attackingTile.GetMapId(), attackingTile.GetX(),
-                            attackingTile.GetY(), (sbyte) player.Dir
+                            attackingTile.GetY(), (sbyte)player.Dir
                         );
                     }
                 }
@@ -1211,7 +1227,7 @@ namespace Intersect.Server.Networking
         //EventInputVariablePacket
         public void HandlePacket(Client client, Player player, EventInputVariablePacket packet)
         {
-            ((Player) client.Entity).RespondToEventInput(
+            ((Player)client.Entity).RespondToEventInput(
                 packet.EventId, packet.Value, packet.StringValue, packet.Canceled
             );
         }
@@ -1366,10 +1382,10 @@ namespace Intersect.Server.Networking
 
             client.LoadCharacter(newChar);
 
-            newChar.SetVital(Vitals.Health, classBase.BaseVital[(int) Vitals.Health]);
-            newChar.SetVital(Vitals.Mana, classBase.BaseVital[(int) Vitals.Mana]);
+            newChar.SetVital(Vitals.Health, classBase.BaseVital[(int)Vitals.Health]);
+            newChar.SetVital(Vitals.Mana, classBase.BaseVital[(int)Vitals.Mana]);
 
-            for (var i = 0; i < (int) Stats.StatCount; i++)
+            for (var i = 0; i < (int)Stats.StatCount; i++)
             {
                 newChar.Stat[i].BaseStat = 0;
             }
@@ -1633,7 +1649,7 @@ namespace Intersect.Server.Networking
                 return;
             }
 
-            ActionProcessing.ProcessAction(client, player, (dynamic) packet.Action);
+            ActionProcessing.ProcessAction(client, player, (dynamic)packet.Action);
         }
 
         //BuyItemPacket
@@ -2110,7 +2126,7 @@ namespace Intersect.Server.Networking
 
                 if (charId != null)
                 {
-                    var character = DbInterface.GetPlayer((Guid) charId);
+                    var character = DbInterface.GetPlayer((Guid)charId);
                     if (character != null && client.Entity.HasFriend(character))
                     {
                         player.RemoveFriend(character);
@@ -2468,7 +2484,7 @@ namespace Intersect.Server.Networking
                 var dbObj = EventBase.Get(evt.Key);
                 if (dbObj == null)
                 {
-                    dbObj = (EventBase) DbInterface.AddGameObject(GameObjectType.Event, evt.Key);
+                    dbObj = (EventBase)DbInterface.AddGameObject(GameObjectType.Event, evt.Key);
                 }
 
                 dbObj.Load(evt.Value.JsonData);
@@ -2497,7 +2513,7 @@ namespace Intersect.Server.Networking
 
             foreach (var plyr in players)
             {
-                plyr.Warp(plyr.MapId, (byte) plyr.X, (byte) plyr.Y, (byte) plyr.Dir, false, (byte) plyr.Z, true);
+                plyr.Warp(plyr.MapId, (byte)plyr.X, (byte)plyr.Y, (byte)plyr.Dir, false, (byte)plyr.Z, true);
                 PacketSender.SendMap(plyr.Client, packet.MapId);
             }
 
@@ -2519,7 +2535,7 @@ namespace Intersect.Server.Networking
                 var tmpMap = new MapInstance(true);
                 if (!packet.AttachedToMap)
                 {
-                    var destType = (int) packet.MapListParentType;
+                    var destType = (int)packet.MapListParentType;
                     newMap = DbInterface.AddGameObject(GameObjectType.Map).Id;
                     tmpMap = MapInstance.Get(newMap);
                     DbInterface.GenerateMapGrids();
@@ -2827,26 +2843,26 @@ namespace Intersect.Server.Networking
                             //Up
                             if (gridY - 1 >= 0 && grid.MyGrid[gridX, gridY - 1] != Guid.Empty)
                             {
-                                MapInstance.Get(grid.MyGrid[gridX, gridY - 1])?.ClearConnections((int) Directions.Down);
+                                MapInstance.Get(grid.MyGrid[gridX, gridY - 1])?.ClearConnections((int)Directions.Down);
                             }
 
                             //Down
                             if (gridY + 1 < grid.Height && grid.MyGrid[gridX, gridY + 1] != Guid.Empty)
                             {
-                                MapInstance.Get(grid.MyGrid[gridX, gridY + 1])?.ClearConnections((int) Directions.Up);
+                                MapInstance.Get(grid.MyGrid[gridX, gridY + 1])?.ClearConnections((int)Directions.Up);
                             }
 
                             //Left
                             if (gridX - 1 >= 0 && grid.MyGrid[gridX - 1, gridY] != Guid.Empty)
                             {
                                 MapInstance.Get(grid.MyGrid[gridX - 1, gridY])
-                                    ?.ClearConnections((int) Directions.Right);
+                                    ?.ClearConnections((int)Directions.Right);
                             }
 
                             //Right
                             if (gridX + 1 < grid.Width && grid.MyGrid[gridX + 1, gridY] != Guid.Empty)
                             {
-                                MapInstance.Get(grid.MyGrid[gridX + 1, gridY]).ClearConnections((int) Directions.Left);
+                                MapInstance.Get(grid.MyGrid[gridX + 1, gridY]).ClearConnections((int)Directions.Left);
                             }
 
                             DbInterface.GenerateMapGrids();
@@ -3002,7 +3018,7 @@ namespace Intersect.Server.Networking
             var obj = DbInterface.AddGameObject(type);
             if (type == GameObjectType.Event)
             {
-                ((EventBase) obj).CommonEvent = true;
+                ((EventBase)obj).CommonEvent = true;
                 DbInterface.SaveGameDatabase();
             }
 
@@ -3133,15 +3149,15 @@ namespace Intersect.Server.Networking
                 //if Item or Resource, kill all global entities of that kind
                 if (type == GameObjectType.Item)
                 {
-                    Globals.KillItemsOf((ItemBase) obj);
+                    Globals.KillItemsOf((ItemBase)obj);
                 }
                 else if (type == GameObjectType.Resource)
                 {
-                    Globals.KillResourcesOf((ResourceBase) obj);
+                    Globals.KillResourcesOf((ResourceBase)obj);
                 }
                 else if (type == GameObjectType.Npc)
                 {
-                    Globals.KillNpcsOf((NpcBase) obj);
+                    Globals.KillNpcsOf((NpcBase)obj);
                 }
 
                 DbInterface.DeleteGameObject(obj);
@@ -3254,22 +3270,22 @@ namespace Intersect.Server.Networking
                     //if Item or Resource, kill all global entities of that kind
                     if (type == GameObjectType.Item)
                     {
-                        Globals.KillItemsOf((ItemBase) obj);
+                        Globals.KillItemsOf((ItemBase)obj);
                     }
                     else if (type == GameObjectType.Npc)
                     {
-                        Globals.KillNpcsOf((NpcBase) obj);
+                        Globals.KillNpcsOf((NpcBase)obj);
                     }
                     else if (type == GameObjectType.Projectile)
                     {
-                        Globals.KillProjectilesOf((ProjectileBase) obj);
+                        Globals.KillProjectilesOf((ProjectileBase)obj);
                     }
 
                     obj.Load(packet.Data);
 
                     if (type == GameObjectType.Quest)
                     {
-                        var qst = (QuestBase) obj;
+                        var qst = (QuestBase)obj;
                         foreach (var evt in qst.RemoveEvents)
                         {
                             var evtb = EventBase.Get(evt);
@@ -3281,7 +3297,7 @@ namespace Intersect.Server.Networking
 
                         foreach (var evt in qst.AddEvents)
                         {
-                            var evtb = (EventBase) DbInterface.AddGameObject(GameObjectType.Event, evt.Key);
+                            var evtb = (EventBase)DbInterface.AddGameObject(GameObjectType.Event, evt.Key);
                             evtb.CommonEvent = false;
                             foreach (var tsk in qst.Tasks)
                             {
@@ -3343,7 +3359,7 @@ namespace Intersect.Server.Networking
                 if (!found)
                 {
                     var obj = DbInterface.AddGameObject(GameObjectType.Tileset);
-                    ((TilesetBase) obj).Name = value;
+                    ((TilesetBase)obj).Name = value;
                     DbInterface.SaveGameDatabase();
                     PacketSender.CacheGameDataPacket();
                     PacketSender.SendGameObjectToAll(obj);

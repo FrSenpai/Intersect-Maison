@@ -10,7 +10,7 @@
 
         MoveLeft,
 
-        MoveRight,
+        MoveRight, 
 
         MoveRandomly,
 
@@ -93,6 +93,15 @@
         SetGraphic,
 
         SetAnimation,
+
+        // At the bottom becauase of Designer Tag
+        MoveUpLeft,
+
+        MoveUpRight,
+
+        MoveDownLeft,
+
+        MoveDownRight,
 
     }
 
