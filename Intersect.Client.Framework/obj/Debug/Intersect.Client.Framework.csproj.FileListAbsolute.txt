@@ -1,0 +1,8 @@
+E:\Github\Intersect-Engine\build\debug\clientextras\Intersect Client Framework.dll.config
+E:\Github\Intersect-Engine\build\debug\clientextras\Intersect Client Framework.dll
+E:\Github\Intersect-Engine\build\debug\clientextras\Intersect Client Framework.pdb
+E:\Github\Intersect-Engine\Intersect.Client.Framework\obj\Debug\Intersect.Client.Framework.csprojAssemblyReference.cache
+E:\Github\Intersect-Engine\Intersect.Client.Framework\obj\Debug\Intersect.Client.Framework.csproj.CoreCompileInputs.cache
+E:\Github\Intersect-Engine\Intersect.Client.Framework\obj\Debug\Intersect.Client.Framework.csproj.CopyComplete
+E:\Github\Intersect-Engine\Intersect.Client.Framework\obj\Debug\Intersect Client Framework.dll
+E:\Github\Intersect-Engine\Intersect.Client.Framework\obj\Debug\Intersect Client Framework.pdb

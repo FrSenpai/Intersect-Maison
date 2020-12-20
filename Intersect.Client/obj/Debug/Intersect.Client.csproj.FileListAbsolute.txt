@@ -1,0 +1,11 @@
+E:\Github\Intersect-Engine\build\debug\client\Intersect Client.exe.config
+E:\Github\Intersect-Engine\build\debug\client\Intersect Client.exe
+E:\Github\Intersect-Engine\build\debug\client\Intersect Client.pdb
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.csprojAssemblyReference.cache
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.Properties.Resources.resources
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.csproj.GenerateResource.cache
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.csproj.CoreCompileInputs.cache
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.csproj.Fody.CopyLocal.cache
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect.Client.csproj.CopyComplete
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect Client.exe
+E:\Github\Intersect-Engine\Intersect.Client\obj\Debug\Intersect Client.pdb

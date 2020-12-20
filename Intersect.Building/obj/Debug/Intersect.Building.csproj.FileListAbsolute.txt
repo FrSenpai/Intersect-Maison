@@ -1,0 +1,10 @@
+E:\Github\Intersect-Engine\build\debug\Intersect.Building\Intersect.Building.dll.config
+E:\Github\Intersect-Engine\build\debug\Intersect.Building\Intersect.Building.dll
+E:\Github\Intersect-Engine\build\debug\Intersect.Building\Intersect.Building.pdb
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.csprojAssemblyReference.cache
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.Properties.KeyGenerationTaskStrings.resources
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.csproj.GenerateResource.cache
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.csproj.CoreCompileInputs.cache
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.csproj.CopyComplete
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.dll
+E:\Github\Intersect-Engine\Intersect.Building\obj\Debug\Intersect.Building.pdb

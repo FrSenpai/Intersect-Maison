@@ -1,0 +1,8 @@
+E:\Github\Intersect-Engine\build\debug\network\Intersect.Network.dll.config
+E:\Github\Intersect-Engine\build\debug\network\Intersect.Network.dll
+E:\Github\Intersect-Engine\build\debug\network\Intersect.Network.pdb
+E:\Github\Intersect-Engine\Intersect.Network\obj\Debug\Intersect.Network.csprojAssemblyReference.cache
+E:\Github\Intersect-Engine\Intersect.Network\obj\Debug\Intersect.Network.csproj.CoreCompileInputs.cache
+E:\Github\Intersect-Engine\Intersect.Network\obj\Debug\Intersect.Network.csproj.CopyComplete
+E:\Github\Intersect-Engine\Intersect.Network\obj\Debug\Intersect.Network.dll
+E:\Github\Intersect-Engine\Intersect.Network\obj\Debug\Intersect.Network.pdb

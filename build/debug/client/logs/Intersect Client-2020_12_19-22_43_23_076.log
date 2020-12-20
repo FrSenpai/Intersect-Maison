@@ -1,0 +1,83 @@
+﻿2020-12-19 21:43:24.100 [Warn] 
+  Message: Missing configuration file.
+    Stack:    à Intersect.Configuration.ConfigurationHelper.Load[T](T configuration, String filePath, Boolean failQuietly) dans E:\Github\Intersect-Engine\Intersect (Core)\Configuration\ConfigurationHelper.cs:ligne 24
+   à Intersect.Configuration.ClientConfiguration.Load(String filePath, Boolean failQuietly) dans E:\Github\Intersect-Engine\Intersect (Core)\Configuration\ClientConfiguration.cs:ligne 23
+   à Intersect.Configuration.ConfigurationHelper.LoadSafely[T](T configuration, String filePath) dans E:\Github\Intersect-Engine\Intersect (Core)\Configuration\ConfigurationHelper.cs:ligne 85
+
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:26.653 [Info] Connecting to 127.0.0.1:5400...
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:26.898 [Debug] Net Incoming Message: DebugMessage: Socket bound to 0.0.0.0:50896: True
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:26.899 [Debug] Net Incoming Message: DebugMessage: Network thread started
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.017 [Info] Connection approved [00000000-0000-0000-0000-000000000000].
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.081 [Debug] approval Time=4471149 Offset=63744006535853 Real=63744011007002
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.082 [Debug] local Time=4471150 Offset=63744006535932 Real=63744011007082
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.082 [Debug] real delta=79
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.082 [Debug] this.Statistics.Ping=0 NCPing=6
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.085 [Debug] Connection established to remote [00000000-0000-0000-0000-000000000000/127.0.0.1:5400].
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.085 [Info] Connected [00000000-0000-0000-0000-000000000000].
+
+--------------------------------------------------------------------------------
+2020-12-19 21:43:27.086 [Debug] Net Incoming Message: DebugMessage: Initiated average roundtrip time to 6.00 ms Remote time is: 4471.08161303125
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.050 [Debug] StatusChanged: [NetIncomingMessage #0 10 bytes] [Disconnecting]
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.050 [Debug] Net Incoming Message: DebugMessage: Shutdown requested
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.053 [Debug] Net Incoming Message: DebugMessage: Shutting down...
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.053 [Debug] Net Incoming Message: DebugMessage: Shutdown requested
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.055 [Debug] StatusChanged: [NetIncomingMessage #0 10 bytes] [Disconnected]
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.067 [Debug] Net Incoming Message: DebugMessage: Shutdown complete
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.216 [Info] Acquiring context lock... (0ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.216 [Info] Acquired. (0ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.217 [Info] Beginning context dispose. (0ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.217 [Info] GC.SuppressFinalize (0ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.217 [Info] InternalDispose() completed. (0ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.217 [Info] Clearing instance... (1ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.218 [Info] Releasing context lock... (2ms)
+
+--------------------------------------------------------------------------------
+2020-12-19 21:44:05.218 [Info] Released. (2ms)
+
+--------------------------------------------------------------------------------
