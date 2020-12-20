@@ -1,0 +1,13 @@
+E:\Github\Intersect-Engine\build\debug\core\Intersect Core.dll.config
+E:\Github\Intersect-Engine\build\debug\core\Intersect Core.xml
+E:\Github\Intersect-Engine\build\debug\core\Intersect Core.dll
+E:\Github\Intersect-Engine\build\debug\core\Intersect Core.pdb
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect (Core).csprojAssemblyReference.cache
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect.Properties.DeveloperStrings.resources
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect.Properties.ExceptionMessages.resources
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect.Properties.Resources.resources
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect (Core).csproj.GenerateResource.cache
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect (Core).csproj.CoreCompileInputs.cache
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect (Core).csproj.CopyComplete
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect Core.dll
+E:\Github\Intersect-Engine\Intersect (Core)\obj\Debug\Intersect Core.pdb

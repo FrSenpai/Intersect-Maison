@@ -1,0 +1,6 @@
+﻿2020-12-19 21:42:35.146 [Warn] Directory was specified as a plugin directory but does not exist: 'resources\plugins'
+
+--------------------------------------------------------------------------------
+2020-12-19 21:42:35.468 [Error] The resources directory could not be found! Intersect will now close.
+
+--------------------------------------------------------------------------------

@@ -1,0 +1,797 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Intersect Server</name>
+    </assembly>
+    <members>
+        <member name="T:Intersect.Server.Core.IServerContext">
+            <summary>
+            Declares the API surface of server contexts.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.IServerContext.ConsoleService">
+            <summary>
+            The server's console processing service.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.IServerContext.LogicService">
+            <summary>
+            The server's core logic service.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.IServerContext.Network">
+            <summary>
+            The server's network processing service.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.IServerContext.RestApi">
+            <summary>
+            The server's REST API provider service.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.LogicService.IsEnabled">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Core.LogicService.TaskStart(Intersect.Server.Core.IServerContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Core.LogicService.TaskStop(Intersect.Server.Core.IServerContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Core.Program">
+            <summary>
+            Please do not modify this without JC's approval! If namespaces are referenced that are not SYSTEM.* then the server won't run cross platform.
+            If you want to add startup instructions see Classes/ServerStart.cs
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.BadArgumentFormat">
+            <summary>
+            Argument matches neither the short nor long argument name format and is not positional.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.CommandNotFound">
+            <summary>
+            Command not found for the given name.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.DuplicateNamedArgument">
+            <summary>
+            Named argument was specified multiple times.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.FlagArgumentsIgnoreValue">
+            <summary>
+            Flag argument is provided a value, but they do not accept them.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.GenericError">
+            <summary>
+            Generic parser error message.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.IllegalArgumentFormat">
+             <summary>
+             Argument matches both the short and long argument name formats.
+            
+             Note that should not actually be possible.
+             </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.InvalidArgumentValue">
+            <summary>
+            The value provided is not valid for this argument.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.InvalidArgumentValueWithType">
+            <summary>
+            The value provided is not valid for this argument, expected one of the specified type.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.MissingArguments">
+            <summary>
+            Required arguments were missing.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.MissingArgumentsDelimeter">
+            <summary>
+            List delimeter for missing arguments.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.MissingNamedArgument">
+            <summary>
+            Named argument is required but missing for the given command.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.MissingPositionalArgument">
+            <summary>
+            Positional argument is required but missing for the given command.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.NoInput">
+            <summary>
+            No input was provided.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.UnhandledNamedArgument">
+            <summary>
+            Named argument is not valid for the given command.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Core.CommandParsing.CommandParserErrorsNamespace.UnhandledPositionalArgument">
+            <summary>
+            Positional argument is not valid for the given command.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Core.ConsoleService.IsEnabled">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Core.ConsoleService.TaskStart(Intersect.Server.Core.IServerContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Core.ConsoleService.TaskStop(Intersect.Server.Core.IServerContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Core.ServerContext">
+            <summary>
+            Implements <see cref="T:Intersect.Server.Core.IServerContext"/>.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Database.ContextInterface`1.Database">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.ContextInterface`1.SaveChanges">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.ContextInterface`1.SaveChanges(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.ContextInterface`1.SaveChangesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.ContextInterface`1.SaveChangesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.ContextInterface`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Database.IntersectDbContext`1">
+            <summary>
+            Abstract DbContext class for all Intersect database contexts.
+            </summary>
+            <inheritdoc cref="T:Microsoft.EntityFrameworkCore.DbContext" />
+            <inheritdoc cref="T:Intersect.Server.Database.ISeedableContext" />
+        </member>
+        <member name="M:Intersect.Server.Database.IntersectDbContext`1.#ctor(System.Data.Common.DbConnectionStringBuilder,Intersect.Config.DatabaseOptions.DatabaseType,System.Boolean,Intersect.Logging.Logger,Intersect.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="connectionStringBuilder"></param>
+            <param name="databaseType"></param>
+            <inheritdoc />
+        </member>
+        <member name="P:Intersect.Server.Database.IntersectDbContext`1.DatabaseType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Database.IntersectDbContext`1.ConnectionStringBuilder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Database.IntersectDbContext`1.IsEmpty">
+            <summary>
+            Checks if the database is empty by checking if there are any tables.
+            </summary>
+            <returns>if the database is empty</returns>
+        </member>
+        <member name="M:Intersect.Server.Database.Logging.LoggingContext.#ctor(System.Data.Common.DbConnectionStringBuilder,Intersect.Config.DatabaseOptions.DatabaseType)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.Logging.LoggingContextInterface.#ctor(Intersect.Server.Database.Logging.ILoggingContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:Intersect.Server.Database.Logging.LoggingContextInterface.RequestLogs">
+            <inheritdoc />
+        </member>
+        <member name="P:Intersect.Server.Database.Logging.LoggingContextInterface.UserActivityHistory">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.Logging.RequestLog.Mapper.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Intersect.Server.Database.Logging.RequestLog})">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Database.MigrationBuilderExtensions.Sql(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder,System.ValueTuple{Intersect.Config.DatabaseOptions.DatabaseType,System.String}[])">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+            <param name="conditionalQueries"></param>
+            <param name="suppressTransaction"></param>
+            <returns></returns>
+            <see cref="M:Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql(System.String,System.Boolean)"/>
+        </member>
+        <member name="M:Intersect.Server.Database.MigrationBuilderExtensions.Sql(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder,System.ValueTuple{Intersect.Config.DatabaseOptions.DatabaseType,System.String,System.Boolean}[])">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+            <param name="conditionalQueries"></param>
+            <returns></returns>
+            <see cref="M:Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql(System.String,System.Boolean)"/>
+        </member>
+        <member name="M:Intersect.Server.Database.Item.TryGetBag(Intersect.Server.Database.PlayerData.Players.Bag@)">
+            <summary>
+            Try to get the bag, with an additional attempt to load it if it is not already loaded (it should be if this is even a bag item).
+            </summary>
+            <param name="bag">the bag if there is one associated with this <see cref="T:Intersect.Server.Database.Item"/></param>
+            <returns>if <paramref name="bag"/> is not <see langword="null"/></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.CanGiveItem(System.Guid,System.Int32)">
+            <summary>
+            Checks whether a player can or can not receive the specified item and its quantity.
+            </summary>
+            <param name="itemId">The item Id to check if the player can receive.</param>
+            <param name="quantity">The amount of this item to check if the player can receive.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.CanGiveItem(Intersect.Server.Database.Item)">
+            <summary>
+            Checks whether a player can or can not receive the specified item and its quantity.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to check if this player can receive.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.CanTakeItem(System.Guid,System.Int32)">
+            <summary>
+            Checks whether or not a player has enough items in their inventory to be taken.
+            </summary>
+            <param name="itemId">The ItemId to see if it can be taken away from the player.</param>
+            <param name="quantity">The quantity of above item to see if we can take away from the player.</param>
+            <returns>Whether or not the item can be taken away from the player in the requested quantity.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.CanTakeItem(Intersect.Server.Database.Item)">
+            <summary>
+            Checks whether or not a player has enough items in their inventory to be taken.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to see if it can be taken away from the player.</param>
+            <returns>Whether or not the item can be taken away from the player.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGetSlot(System.Int32,Intersect.Server.Database.PlayerData.Players.InventorySlot@,System.Boolean)">
+            <summary>
+            Gets the item at <paramref name="slotIndex"/> and stores it in <paramref name="slot"/>.
+            </summary>
+            <param name="slotIndex">the slot to load the <see cref="T:Intersect.Server.Database.Item"/> from</param>
+            <param name="slot">the <see cref="T:Intersect.Server.Database.Item"/> at <paramref name="slotIndex"/></param>
+            <param name="createSlotIfNull">if the slot is in an invalid state (<see langword="null"/>), set it</param>
+            <returns>returns <see langword="false"/> if <paramref name="slot"/> is set to <see langword="null"/></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGetItemAt(System.Int32,Intersect.Server.Database.Item@)">
+            <summary>
+            Gets the item at <paramref name="slotIndex"/> and stores it in <paramref name="item"/>.
+            </summary>
+            <param name="slotIndex">the slot to load the <see cref="T:Intersect.Server.Database.Item"/> from</param>
+            <param name="item">the <see cref="T:Intersect.Server.Database.Item"/> at <paramref name="slotIndex"/></param>
+            <returns>returns <see langword="false"/> if <paramref name="item"/> is set to <see langword="null"/></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(Intersect.Server.Database.Item)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to give to the player.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(Intersect.Server.Database.Item,Intersect.Enums.ItemHandling)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to give to the player.</param>
+            <param name="handler">The way to handle handing out this item.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(System.Guid,System.Int32)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="itemId">The Id for the item to be handed out to the player.</param>
+            <param name="quantity">The quantity of items to be handed out to the player.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(System.Guid,System.Int32,Intersect.Enums.ItemHandling)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="itemId">The Id for the item to be handed out to the player.</param>
+            <param name="quantity">The quantity of items to be handed out to the player.</param>
+            <param name="handler">The way to handle handing out this item.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(System.Guid,System.Int32,Intersect.Enums.ItemHandling,System.Boolean,System.Boolean)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="itemId">The Id for the item to be handed out to the player.</param>
+            <param name="quantity">The quantity of items to be handed out to the player.</param>
+            <param name="handler">The way to handle handing out this item.</param>
+            <param name="bankOverflow">Should we allow the items to overflow into the player's bank when their inventory is full.</param>
+            <param name="sendUpdate">Should we send an inventory update when we are done changing the player's items.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryGiveItem(Intersect.Server.Database.Item,Intersect.Enums.ItemHandling,System.Boolean,System.Boolean)">
+            <summary>
+            Attempts to give the player an item. Returns whether or not it succeeds.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to give to the player.</param>
+            <param name="handler">The way to handle handing out this item.</param>
+            <param name="bankOverflow">Should we allow the items to overflow into the player's bank when their inventory is full.</param>
+            <param name="sendUpdate">Should we send an inventory update when we are done changing the player's items.</param>
+            <returns>Whether the player received the item or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.GiveItem(Intersect.Server.Database.Item,System.Boolean)">
+            <summary>
+            Gives the player an item. NOTE: This method MAKES ZERO CHECKS to see if this is possible!
+            Use TryGiveItem where possible!
+            </summary>
+            <param name="item"></param>
+            <param name="sendUpdate"></param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.FindOpenInventorySlots">
+            <summary>
+            Retrieves a list of open inventory slots for this player.
+            </summary>
+            <returns>A list of <see cref="T:Intersect.Server.Database.PlayerData.Players.InventorySlot"/></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.FindOpenInventorySlot">
+            <summary>
+            Finds the first open inventory slot this player has.
+            </summary>
+            <returns>An <see cref="T:Intersect.Server.Database.PlayerData.Players.InventorySlot"/> instance, or null if none are found.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.SwapItems(System.Int32,System.Int32)">
+            <summary>
+            Swap items between <paramref name="fromSlotIndex"/> and <paramref name="toSlotIndex"/>.
+            </summary>
+            <param name="fromSlotIndex">the slot index to swap from</param>
+            <param name="toSlotIndex">the slot index to swap to</param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryDropItemFrom(System.Int32,System.Int32)">
+            <summary>
+            Attempt to drop <paramref name="amount"/> of the item in the slot
+            identified by <paramref name="slotIndex"/>, returning false if it
+            is unable to drop the item for any reason.
+            </summary>
+            <param name="slotIndex">the slot to drop from</param>
+            <param name="amount">the amount to drop</param>
+            <returns>if an item was dropped</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.DropItemFrom(System.Int32,System.Int32)">
+            <summary>
+            Drops <paramref name="amount"/> of the item in the slot identified by <paramref name="slotIndex"/>.
+            </summary>
+            <param name="slotIndex">the slot to drop from</param>
+            <param name="amount">the amount to drop</param>
+            <see cref="M:Intersect.Server.Entities.Player.TryDropItemFrom(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryTakeItem(Intersect.Server.Database.PlayerData.Players.InventorySlot,System.Int32,Intersect.Enums.ItemHandling,System.Boolean)">
+            <summary>
+            Try to take an item away from the player by slot.
+            </summary>
+            <param name="slot">The inventory slot to take the item away from.</param>
+            <param name="amount">The amount of this item we intend to take away from the player.</param>
+            <param name="handler">The method in which we intend to handle taking away the item from our player.</param>
+            <param name="sendUpdate">Do we need to send an inventory update after taking away the item.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TryTakeItem(System.Guid,System.Int32,Intersect.Enums.ItemHandling,System.Boolean)">
+            <summary>
+            Try to take away an item from the player by Id.
+            </summary>
+            <param name="itemId">The Id of the item we're trying to take away from the player.</param>
+            <param name="amount">The amount of this item we intend to take away from the player.</param>
+            <param name="handler">The method in which we intend to handle taking away the item from our player.</param>
+            <param name="sendUpdate">Do we need to send an inventory update after taking away the item.</param>
+            <returns>Whether the item was taken away successfully or not.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.TakeItem(Intersect.Server.Database.PlayerData.Players.InventorySlot,System.Int32,System.Boolean)">
+            <summary>
+            Take an item away from the player, or an amount of it if they have more. NOTE: This method MAKES ZERO CHECKS to see if this is possible!
+            Use TryTakeItem where possible!
+            </summary>
+            <param name="slot"></param>
+            <param name="amount"></param>
+            <param name="sendUpdate"></param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.FindInventoryItemQuantity(System.Guid)">
+            <summary>
+            Find the amount of a specific item a player has.
+            </summary>
+            <param name="itemId">The item Id to look for.</param>
+            <returns>The amount of the requested item the player has on them.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.FindInventoryItemSlot(System.Guid,System.Int32)">
+            <summary>
+            Finds an inventory slot matching the desired item and quantity.
+            </summary>
+            <param name="itemId">The item Id to look for.</param>
+            <param name="quantity">The quantity of the item to look for.</param>
+            <returns>An <see cref="T:Intersect.Server.Database.PlayerData.Players.InventorySlot"/> that contains the item, or null if none are found.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.FindInventoryItemSlots(System.Guid,System.Int32)">
+            <summary>
+            Finds all inventory slots matching the desired item and quantity.
+            </summary>
+            <param name="itemId">The item Id to look for.</param>
+            <param name="quantity">The quantity of the item to look for.</param>
+            <returns>A list of <see cref="T:Intersect.Server.Database.PlayerData.Players.InventorySlot"/> containing the requested item.</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Events.EventPageInstance.Move(System.Int32,Intersect.Server.Entities.Player,System.Boolean,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Entities.Pathfinding.SpatialAStar">
+            <summary>
+                Uses about 50 MB for a 1024x1024 grid.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Entities.Pathfinding.SpatialAStar.Search(Intersect.Point,Intersect.Point,Intersect.Server.Entities.Pathfinding.PathNode)">
+            <summary>
+                Returns null, if no path is found. Start- and End-Node are included in returned path. The user context
+                is passed to IsWalkable().
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Entities.Pathfinding.PriorityQueue`1.Push(`0)">
+            <summary>
+                Push an object onto the PQ
+            </summary>
+            <param name="item">The new object</param>
+            <returns>
+                The index in the list where the object is _now_. This will change when objects are taken from or put onto the
+                PQ.
+            </returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Pathfinding.PriorityQueue`1.Pop">
+            <summary>
+                Get the smallest object and remove it.
+            </summary>
+            <returns>The smallest object</returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Pathfinding.PriorityQueue`1.Update(`0)">
+            <summary>
+                Notify the PQ that the object at position i has changed
+                and the PQ needs to restore order.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Entities.Pathfinding.PriorityQueue`1.Peek">
+            <summary>
+                Get the smallest object without removing it.
+            </summary>
+            <returns>The smallest object</returns>
+        </member>
+        <member name="F:Intersect.Server.Entities.Npc.DamageMap">
+            <summary>
+            Damage Map - Keep track of who is doing the most damage to this npc and focus accordingly
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Entities.Npc.DamageMapHighest">
+            <summary>
+            Returns the entity that ranks the highest on this NPC's damage map.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Entities.Npc.AggroCenterMap">
+            <summary>
+            The map on which this NPC was "aggro'd" and started chasing a target.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Entities.Npc.AggroCenterX">
+            <summary>
+            The X value on which this NPC was "aggro'd" and started chasing a target.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Entities.Npc.AggroCenterY">
+            <summary>
+            The Y value on which this NPC was "aggro'd" and started chasing a target.
+            </summary>
+        </member>
+        <member name="F:Intersect.Server.Entities.Npc.AggroCenterZ">
+            <summary>
+            The Z value on which this NPC was "aggro'd" and started chasing a target.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Entities.Entity.JsonColor">
+            <summary>
+            The database compatible version of <see cref="P:Intersect.Server.Entities.Entity.Color"/>
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Entities.Entity.Color">
+            <summary>
+            Defines the ARGB color settings for this Entity.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Entities.Entity.CanMove(System.Int32)">
+            <summary>
+                Determines if this entity can move in the direction given.
+                Returns -5 if the tile is completely out of bounds.
+                Returns -3 if a tile is blocked because of a Z dimension tile
+                Returns -2 if a tile is blocked by a map attribute.
+                Returns -1 for clear.
+                Returns the type of entity that is blocking the way (if one exists)
+            </summary>
+            <param name="moveDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intersect.Server.Entities.Entity.CompareName(System.String,System.String)">
+            <summary>
+            Compares two player names, returning if they are equivalent.
+            </summary>
+            <param name="name">a name</param>
+            <param name="nameOther">a name to compare with</param>
+            <returns><code>false</code> if <code>null</code> or non-byte-equal ignoring case</returns>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.AddItem(System.Int32,System.Int32,Intersect.Server.Maps.MapItem)">
+            <summary>
+            Add a map item to this map.
+            </summary>
+            <param name="x">The X location of this item.</param>
+            <param name="y">The Y location of this item.</param>
+            <param name="item">The <see cref="T:Intersect.Server.Maps.MapItem"/> to add to the map.</param>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.SpawnItem(System.Int32,System.Int32,Intersect.Server.Database.Item,System.Int32)">
+            <summary>
+            Spawn an item to this map instance.
+            </summary>
+            <param name="x">The horizontal location of this item</param>
+            <param name="y">The vertical location of this item.</param>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to spawn on the map.</param>
+            <param name="amount">The amount of times to spawn this item to the map. Set to the <see cref="T:Intersect.Server.Database.Item"/> quantity, overwrites quantity if stackable!</param>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.SpawnItem(System.Int32,System.Int32,Intersect.Server.Database.Item,System.Int32,System.Guid)">
+            <summary>
+            Spawn an item to this map instance.
+            </summary>
+            <param name="x">The horizontal location of this item</param>
+            <param name="y">The vertical location of this item.</param>
+            <param name="item">The <see cref="T:Intersect.Server.Database.Item"/> to spawn on the map.</param>
+            <param name="amount">The amount of times to spawn this item to the map. Set to the <see cref="T:Intersect.Server.Database.Item"/> quantity, overwrites quantity if stackable!</param>
+            <param name="owner">The player Id that will be the temporary owner of this item.</param>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.FindItemLocation(System.Guid)">
+            <summary>
+            Finds the location on the map of this specified map item.
+            </summary>
+            <param name="uniqueId">The Unique Id of the Map Item to look for.</param>
+            <returns>Returns a <see cref="T:Intersect.Point"/> containing the location of this map item.</returns>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.FindItem(System.Guid)">
+            <summary>
+            Find a Map Item on this map based on its Unique Id;
+            </summary>
+            <param name="uniqueId">The Unique Id of the Map Item to look for.</param>
+            <returns>Returns a <see cref="T:Intersect.Server.Maps.MapItem"/> if one is found with the desired Unique Id.</returns>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.FindItemsAt(System.Int32,System.Int32)">
+            <summary>
+            /// Find all map items at a specificed location.
+            </summary>
+            <param name="x">The X Coordinate to request items for.</param>
+            <param name="y">The Y Coordinate to request items for.</param>
+            <returns>Returns a <see cref="!:List"/> of <see cref="T:Intersect.Server.Maps.MapItem"/></returns>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapInstance.FindItemsAt(Intersect.Point)">
+            <summary>
+            Find all map items at a specificed location.
+            </summary>
+            <param name="location">The <see cref="T:Intersect.Point"/> for which to request map items.</param>
+            <returns>Returns a <see cref="!:List"/> of <see cref="T:Intersect.Server.Maps.MapItem"/></returns>
+        </member>
+        <member name="P:Intersect.Server.Maps.MapItem.UniqueId">
+            <summary>
+            The Unique Id of this particular MapItemInstance so we can refer to it elsewhere.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Maps.MapItem.SetupStatBuffs(Intersect.Server.Database.Item)">
+            <summary>
+            Sets up the Stat Buffs on this map item from a supplied item.
+            </summary>
+            <param name="item">The item to take the Stat Buffs from and apply them to this MapItem.</param>
+        </member>
+        <member name="M:Intersect.Server.Maps.TileHelper.#ctor(System.Guid,System.Int32,System.Int32)">
+            <summary>
+                Creates a new tile helper instance in a position given.
+            </summary>
+            <param name="mapId"></param>
+            <param name="tileX"></param>
+            <param name="tileY"></param>
+        </member>
+        <member name="M:Intersect.Server.Maps.TileHelper.Translate(System.Int32,System.Int32)">
+            <summary>
+                Moves our tile and then attempts to adjust the map location of we walked out of bounds. Will return true if the
+                position is valid. False if not.
+            </summary>
+            <param name="xOffset"></param>
+            <param name="yOffset"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Intersect.Server.Networking.Client.TimedBufferPacketsRemaining">
+            <summary>
+            Number of "grace" packets that the client has remaining if speedhacking is accidentally detected.
+            </summary>
+        </member>
+        <member name="T:Intersect.Server.Plugins.Helpers.IServerLifecycleHelper">
+            <summary>
+            Defines the API for accessing server lifecycle information and events.
+            </summary>
+            <see cref="T:Intersect.Plugins.Interfaces.ILifecycleHelper"/>
+        </member>
+        <member name="T:Intersect.Server.Plugins.Helpers.ServerLifecycleHelper">
+            <inheritdoc cref="T:Intersect.Server.Plugins.Helpers.IServerLifecycleHelper"/>
+        </member>
+        <member name="M:Intersect.Server.Plugins.Helpers.ServerLifecycleHelper.#ctor(Intersect.Server.Plugins.IServerPluginContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Plugins.IServerPluginContext">
+            <summary>
+            Declares the plugin API surface for the Intersect server
+            </summary>
+        </member>
+        <member name="T:Intersect.Server.Plugins.ServerPluginContext">
+            <summary>
+            Implementation of <see cref="T:Intersect.Server.Plugins.IServerPluginContext"/>.
+            </summary>
+        </member>
+        <member name="T:Intersect.Server.Plugins.ServerPluginContext.Factory">
+            <summary>
+            <see cref="T:Intersect.Plugins.IPluginContext"/> factory that creates instances of <see cref="T:Intersect.Server.Plugins.IServerPluginContext"/>.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Plugins.ServerPluginContext.Factory.Create(System.Object[])">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Plugins.ServerPluginContext.#ctor(Intersect.Plugins.Plugin)">
+            <inheritdoc />
+        </member>
+        <member name="P:Intersect.Server.Plugins.ServerPluginContext.Lifecycle">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Authentication.OAuth.IAppBuilderExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Authentication.OAuth.IAppBuilderExtensions.UseContentTypeMappingMiddleware(Owin.IAppBuilder,System.Collections.Generic.IDictionary{System.ValueTuple{Microsoft.Owin.PathString,System.String,System.String},Intersect.Server.Web.RestApi.Middleware.RequestMapFunc})">
+            <summary>
+            
+            </summary>
+            <param name="appBuilder"></param>
+            <param name="requestMap"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Authentication.OAuth.IOwinContextExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Authentication.OAuth.IOwinContextExtensions.ConvertFromJsonToFormBody(Microsoft.Owin.IOwinContext)">
+            <summary>
+            
+            </summary>
+            <param name="owinContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Authentication.OAuth.IOwinRequestExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Authentication.OAuth.IOwinRequestExtensions.JsonBodyToMap(Microsoft.Owin.IOwinRequest)">
+            <summary>
+            
+            </summary>
+            <param name="owinRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Authentication.OAuth.IOwinRequestExtensions.JsonBodyToEncodedParameterStrings(Microsoft.Owin.IOwinRequest)">
+            <summary>
+            
+            </summary>
+            <param name="owinRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Middleware.RequestMapFunc">
+            <summary>
+            
+            </summary>
+            <param name="owinContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Middleware.ContentTypeMappingMiddleware">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Middleware.ContentTypeMappingMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,System.Collections.Generic.IDictionary{System.ValueTuple{Microsoft.Owin.PathString,System.String,System.String},Intersect.Server.Web.RestApi.Middleware.RequestMapFunc})">
+            <inheritdoc />
+            <summary>
+            </summary>
+            <param name="next"></param>
+            <param name="requestMap"></param>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Middleware.ContentTypeMappingMiddleware.Invoke(Microsoft.Owin.IOwinContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Middleware.IntersectRequestLoggingMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Intersect.Logging.LogLevel)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Middleware.IntersectRequestLoggingMiddleware.Invoke(Microsoft.Owin.IOwinContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Middleware.IntersectThrottlingMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,WebApiThrottle.ThrottlePolicy,System.String,System.String,WebApiThrottle.IThrottleRepository)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Configuration.ApiConfiguration">
+            <inheritdoc />
+            <summary>
+            Configuration options for <see cref="T:Intersect.Server.Web.RestApi.RestApi" />.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Configuration.ApiConfiguration.Load(System.String,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Configuration.ApiConfiguration.Save(System.String,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Constraints.AdminActionsConstraint.Match(System.Net.Http.HttpRequestMessage,System.Web.Http.Routing.IHttpRoute,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Web.Http.Routing.HttpRouteDirection)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Logging.IntersectLogger.WriteCore(System.Diagnostics.TraceEventType,System.Int32,System.Object,System.Exception,System.Func{System.Object,System.Exception,System.String})">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Logging.IntersectLoggerFactory.Create(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Payloads.ChatMessage.Constraint.Match(System.Net.Http.HttpRequestMessage,System.Web.Http.Routing.IHttpRoute,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Web.Http.Routing.HttpRouteDirection)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Payloads.LookupKey.Constraint.Match(System.Net.Http.HttpRequestMessage,System.Web.Http.Routing.IHttpRoute,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Web.Http.Routing.HttpRouteDirection)">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Web.RestApi.Serialization.ApiVisibilityContractResolver">
+            <inheritdoc />
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Web.RestApi.Serialization.ApiVisibilityContractResolver.RequestContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Serialization.ApiVisibilityContractResolver.GetSerializableMembers(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Services.AuthorizedRoutesService.RequiresAuthorization(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Services.IntersectServiceDependencyResolver.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Services.IntersectServiceDependencyResolver.GetService(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Services.IntersectServiceDependencyResolver.GetServices(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Intersect.Server.Web.RestApi.Services.IntersectServiceDependencyResolver.BeginScope">
+            <inheritdoc />
+        </member>
+        <member name="T:Intersect.Server.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Intersect.Server.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>
