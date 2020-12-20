@@ -784,6 +784,9 @@ namespace Intersect.Client.Localization
 
             public static LocalizedString none = @"None";
 
+            [NotNull, JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public static LocalizedString MapItemStackable = @"{01} {00}";
+
         }
 
         public struct InputBox
@@ -796,6 +799,16 @@ namespace Intersect.Client.Localization
             public static LocalizedString okay = @"Okay";
 
             public static LocalizedString yes = @"Yes";
+
+        }
+
+        public struct MapItemWindow
+        {
+            [NotNull, JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public static LocalizedString Title = @"Loot";
+
+            [NotNull, JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public static LocalizedString LootButton = @"Loot All";
 
         }
 
@@ -1538,6 +1551,12 @@ namespace Intersect.Client.Localization
 
             public static LocalizedString Percent = @"{00}%";
 
+        }
+
+        public struct GameWindow
+        {
+            [NotNull, JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public static LocalizedString EntityNameAndLevel = @"{00} [Lv. {01}]";
         }
 
     }

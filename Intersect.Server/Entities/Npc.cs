@@ -73,7 +73,6 @@ namespace Intersect.Server.Entities
         public long FindTargetWaitTime;
         public int FindTargetDelay = 500;
 
-
         /// <summary>
         /// The map on which this NPC was "aggro'd" and started chasing a target.
         /// </summary>
@@ -98,6 +97,7 @@ namespace Intersect.Server.Entities
         {
             Name = myBase.Name;
             Sprite = myBase.Sprite;
+            Color = myBase.Color;
             Level = myBase.Level;
             Base = myBase;
             Despawnable = despawnable;
