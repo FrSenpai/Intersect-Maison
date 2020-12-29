@@ -23,8 +23,10 @@ using Intersect.Utilities;
 
 namespace Intersect.Client.Entities
 {
+
     public class Player : Entity
     {
+
         public delegate void InventoryUpdated();
 
         public Guid Class;
@@ -132,10 +134,12 @@ namespace Intersect.Client.Entities
 
         public override bool Update()
         {
+
             if (Globals.Me == this)
             {
                 HandleInput();
             }
+
 
             if (!IsBusy())
             {
@@ -815,40 +819,36 @@ namespace Intersect.Client.Entities
                         Globals.Me.MoveDir = 0; // Up
 
                         break;
-
                     case -1.0f:
                         Globals.Me.MoveDir = 1; // Down
                         break;
-
                     case -0.1f: // x = 0, y = -1
                         Globals.Me.MoveDir = 2; // Left
                         break;
-
                     case 0.1f:
                         Globals.Me.MoveDir = 3; // Right
 
                         break;
-
                     case 0.9f:
                         Globals.Me.MoveDir = 4; // NW
 
                         break;
-
                     case 1.1f:
                         Globals.Me.MoveDir = 5; // NE
 
                         break;
-
                     case -1.1f:
                         Globals.Me.MoveDir = 6; // SW
 
                         break;
-
                     case -0.9f:
                         Globals.Me.MoveDir = 7; // SE
 
                         break;
                 }
+
+
+
             }
         }
 
@@ -872,7 +872,7 @@ namespace Intersect.Client.Entities
                 }
             }
 
-            //Something is null.. return a value that is out of range :)
+            //Something is null.. return a value that is out of range :) 
             return 9999;
         }
 
@@ -983,93 +983,40 @@ namespace Intersect.Client.Entities
             int x = Globals.Me.X;
             int y = Globals.Me.Y;
             var map = Globals.Me.CurrentMap;
-            List<int[]> hitbox = new List<int[]>();
             switch (Globals.Me.Dir)
             {
                 case 0:
-                    hitbox.AddRange(new List<int[]> {
-                                new int[] { x - 1, y - 1 }, new int[] { x, y - 1 }, new int[] { x + 1, y - 1 },
-                                new int[] { x - 1, y },                              new int[] { x + 1, y },
-                             });
                     y--;
 
                     break;
-
                 case 1:
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x - 1, y },                              new int[] { x + 1, y },
-                                new int[] { x - 1, y + 1 }, new int[] { x, y + 1 }, new int[] { x + 1, y + 1 },
-                             });
                     y++;
 
                     break;
-
                 case 2: // Left
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x - 1, y - 1 }, new int[] { x, y - 1 },
-                                new int[] { x - 1, y },
-                                new int[] { x - 1, y + 1 }, new int[] { x, y + 1 }
-                             });
                     x--;
 
                     break;
-
                 case 3: // Right
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x, y - 1 }, new int[] { x + 1, y - 1 },
-                                new int[] { x + 1, y },
-                                new int[] { x, y + 1 }, new int[] { x + 1, y + 1 }
-                             });
                     x++;
 
                     break;
-
                 case 4: // UpLeft
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x - 1, y - 1 }, new int[] { x, y - 1 }, new int[] { x + 1, y - 1 },
-                                new int[] { x - 1, y },
-                                new int[] { x - 1, y + 1 }
-                             });
                     y--;
                     x--;
 
                     break;
-
                 case 5: //UpRight
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x - 1, y - 1 }, new int[] { x, y - 1 }, new int[] { x + 1, y - 1 },
-                                new int[] { x + 1, y },
-                                new int[] { x + 1, y + 1 }
-                             });
                     y--;
                     x++;
 
                     break;
-
                 case 6: // DownLeft
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x - 1, y - 1 },
-                                new int[] { x - 1, y },
-                                new int[] { x - 1, y + 1 }, new int[] { x, y + 1 }, new int[] { x + 1, y + 1 }
-                             });
                     y++;
                     x--;
 
                     break;
-
                 case 7: // DownRight
-                    hitbox.AddRange(new List<int[]>
-                             {
-                                new int[] { x + 1, y - 1 },
-                                new int[] { x + 1, y },
-                                new int[] { x - 1, y + 1 }, new int[] { x, y + 1 }, new int[] { x + 1, y + 1 }
-                             });
                     y++;
                     x++;
 
@@ -1088,35 +1035,15 @@ namespace Intersect.Client.Entities
                     if (en.Value != Globals.Me)
                     {
                         if (en.Value.CurrentMap == map &&
+                            en.Value.X == x &&
+                            en.Value.Y == y &&
                             en.Value.CanBeAttacked())
                         {
-                            if (TargetIndex != null && en.Value.IsATarget)
-                            {
-                                bool canAttack = false;
-                                foreach (int[] hitBx in hitbox)
-                                {
-                                    if (hitBx[0] == en.Value.X && hitBx[1] == en.Value.Y)
-                                    {
-                                        canAttack = true;
-                                        break;
-                                    }
-                                }
-                                if (canAttack)
-                                {
-                                    PacketSender.SendAttack(en.Key, en.Value.IsATarget);
-                                    AttackTimer = Globals.System.GetTimeMs() + CalculateAttackTime();
+                            //ATTACKKKKK!!!
+                            PacketSender.SendAttack(en.Key);
+                            AttackTimer = Timing.Global.Ticks / TimeSpan.TicksPerMillisecond + CalculateAttackTime();
 
-                                    return true;
-                                }
-                            }
-                            else if (en.Value.X == x && en.Value.Y == y)
-                            {
-                                //ATTACKKKKK!!!
-                                PacketSender.SendAttack(en.Key, en.Value.IsATarget);
-                                AttackTimer = Globals.System.GetTimeMs() + CalculateAttackTime();
-
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }
@@ -1146,8 +1073,7 @@ namespace Intersect.Client.Entities
             }
 
             //Projectile/empty swing for animations
-            // Check if there is an issue with the value always at false
-            PacketSender.SendAttack(Guid.Empty, false);
+            PacketSender.SendAttack(Guid.Empty);
             AttackTimer = Timing.Global.Ticks / TimeSpan.TicksPerMillisecond + CalculateAttackTime();
 
             return true;
@@ -1220,6 +1146,7 @@ namespace Intersect.Client.Entities
 
             Entity bestMatch = null;
             var bestAreaMatch = 0f;
+
 
             foreach (MapInstance map in MapInstance.Lookup.Values)
             {
@@ -1516,7 +1443,6 @@ namespace Intersect.Client.Entities
                             }
 
                             break;
-
                         case 1:
                             if (IsTileBlocked(X, Y + 1, Z, CurrentMap, ref blockedBy) == -1)
                             {
@@ -1528,7 +1454,6 @@ namespace Intersect.Client.Entities
                             }
 
                             break;
-
                         case 2:
 
                             if (IsTileBlocked(X - 1, Y, Z, CurrentMap, ref blockedBy) == -1)
@@ -1541,7 +1466,6 @@ namespace Intersect.Client.Entities
                             }
 
                             break;
-
                         case 3:
 
                             if (IsTileBlocked(X + 1, Y, Z, CurrentMap, ref blockedBy) == -1)
@@ -1554,7 +1478,6 @@ namespace Intersect.Client.Entities
                             }
 
                             break;
-
                         case 4: // NW
 
                             if (IsTileBlocked(X - 1, Y - 1, Z, CurrentMap, ref blockedBy) == -1)
@@ -1567,7 +1490,6 @@ namespace Intersect.Client.Entities
                                 OffsetX = Options.TileWidth;
                             }
                             break;
-
                         case 5: // NE
 
                             if (IsTileBlocked(X + 1, Y - 1, Z, CurrentMap, ref blockedBy) == -1)
@@ -1580,7 +1502,6 @@ namespace Intersect.Client.Entities
                                 OffsetX = -Options.TileWidth;
                             }
                             break;
-
                         case 6: // SW
 
                             if (IsTileBlocked(X - 1, Y + 1, Z, CurrentMap, ref blockedBy) == -1)
@@ -1593,7 +1514,6 @@ namespace Intersect.Client.Entities
                                 OffsetX = Options.TileWidth;
                             }
                             break;
-
                         case 7: // SE
 
                             if (IsTileBlocked(X + 1, Y + 1, Z, CurrentMap, ref blockedBy) == -1)
@@ -1655,6 +1575,7 @@ namespace Intersect.Client.Entities
                                 CurrentMap = Globals.MapGrid[gridX, gridY];
                                 FetchNewMaps();
                             }
+
                         }
                         else
                         {
@@ -1968,11 +1889,9 @@ namespace Intersect.Client.Entities
                 {
                     if (en.Value.GetType() != typeof(Projectile) && en.Value.GetType() != typeof(Resource))
                     {
-                        en.Value.IsATarget = false;
                         if (TargetType == 0 && TargetIndex == en.Value.Id)
                         {
                             en.Value.DrawTarget((int)TargetTypes.Selected);
-                            en.Value.IsATarget = true;
                         }
                     }
                 }
@@ -2061,19 +1980,23 @@ namespace Intersect.Client.Entities
                 }
             }
         }
+
     }
 
     public class FriendInstance
     {
+
         public string Map;
 
         public string Name;
 
         public bool Online = false;
+
     }
 
     public class HotbarInstance
     {
+
         public Guid BagId = Guid.Empty;
 
         public Guid ItemOrSpellId = Guid.Empty;
@@ -2084,5 +2007,7 @@ namespace Intersect.Client.Entities
         {
             JsonConvert.PopulateObject(data, this);
         }
+
     }
+
 }

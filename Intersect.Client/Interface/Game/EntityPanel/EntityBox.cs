@@ -20,8 +20,10 @@ using JetBrains.Annotations;
 
 namespace Intersect.Client.Interface.Game.EntityPanel
 {
+
     public class EntityBox
     {
+
         private static int sStatusXPadding = 2;
 
         private static int sStatusYPadding = 2;
@@ -107,8 +109,6 @@ namespace Intersect.Client.Interface.Game.EntityPanel
 
         public bool UpdateStatuses;
 
-        public bool IsHidden;
-
         //Init
         public EntityBox(Canvas gameCanvas, EntityTypes entityType, Entity myEntity, bool playerBox = false)
         {
@@ -122,10 +122,10 @@ namespace Intersect.Client.Interface.Game.EntityPanel
 
             EntityInfoPanel = new ImagePanel(EntityWindow, "EntityInfoPanel");
 
-            EntityName = new Framework.Gwen.Control.Label(EntityInfoPanel, "EntityNameLabel") { Text = myEntity?.Name };
+            EntityName = new Framework.Gwen.Control.Label(EntityInfoPanel, "EntityNameLabel") {Text = myEntity?.Name};
             EntityLevel = new Framework.Gwen.Control.Label(EntityInfoPanel, "EntityLevelLabel");
             EntityNameAndLevel = new Framework.Gwen.Control.Label(EntityInfoPanel, "NameAndLevelLabel")
-            { IsHidden = true };
+                {IsHidden = true};
 
             EntityMap = new Framework.Gwen.Control.Label(EntityInfoPanel, "EntityMapLabel");
 
@@ -247,7 +247,6 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                     EventDesc.Hide();
 
                     break;
-
                 case EntityTypes.GlobalEntity:
                     EventDesc.Hide();
                     ExpBackground.Hide();
@@ -260,7 +259,6 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                     EntityMap.Hide();
 
                     break;
-
                 case EntityTypes.Event:
                     ExpBackground.Hide();
                     ExpBar.Hide();
@@ -315,7 +313,7 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 UpdateSpellStatus();
                 if (EntityType == EntityTypes.Event)
                 {
-                    EventDesc.AddText(((Event)MyEntity).Desc, Color.White);
+                    EventDesc.AddText(((Event) MyEntity).Desc, Color.White);
                     EventDesc.SizeToChildren(false, true);
                 }
 
@@ -328,15 +326,12 @@ namespace Intersect.Client.Interface.Game.EntityPanel
             //Update the event/entity face.
             UpdateImage();
 
-            IsHidden = true;
-
             if (EntityType != EntityTypes.Event)
             {
                 UpdateLevel();
                 UpdateMap();
                 UpdateHpBar(elapsedTime);
                 UpdateMpBar(elapsedTime);
-                IsHidden = false;
             }
             else
             {
@@ -474,9 +469,9 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         {
             var targetHpWidth = 0f;
             var targetShieldWidth = 0f;
-            if (MyEntity.MaxVital[(int)Vitals.Health] > 0)
+            if (MyEntity.MaxVital[(int) Vitals.Health] > 0)
             {
-                var maxVital = MyEntity.MaxVital[(int)Vitals.Health];
+                var maxVital = MyEntity.MaxVital[(int) Vitals.Health];
                 var shieldSize = 0;
 
                 //Check for shields
@@ -484,28 +479,28 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 {
                     if (status.Type == StatusTypes.Shield)
                     {
-                        shieldSize += status.Shield[(int)Vitals.Health];
+                        shieldSize += status.Shield[(int) Vitals.Health];
                     }
                 }
 
-                if (shieldSize + MyEntity.Vital[(int)Vitals.Health] > maxVital)
+                if (shieldSize + MyEntity.Vital[(int) Vitals.Health] > maxVital)
                 {
-                    maxVital = shieldSize + MyEntity.Vital[(int)Vitals.Health];
+                    maxVital = shieldSize + MyEntity.Vital[(int) Vitals.Health];
                 }
 
                 var width = HpBackground.Width;
 
-                var hpfillRatio = (float)MyEntity.Vital[(int)Vitals.Health] / maxVital;
+                var hpfillRatio = (float) MyEntity.Vital[(int) Vitals.Health] / maxVital;
                 hpfillRatio = Math.Min(1, Math.Max(0, hpfillRatio));
-                targetHpWidth = (float)Math.Ceiling(hpfillRatio * width);
+                targetHpWidth = (float) Math.Ceiling(hpfillRatio * width);
 
-                var shieldfillRatio = (float)shieldSize / maxVital;
+                var shieldfillRatio = (float) shieldSize / maxVital;
                 shieldfillRatio = Math.Min(1, Math.Max(0, shieldfillRatio));
-                targetShieldWidth = (float)Math.Floor(shieldfillRatio * width);
+                targetShieldWidth = (float) Math.Floor(shieldfillRatio * width);
 
                 //Fix the Labels
                 HpLbl.Text = Strings.EntityBox.vital0val.ToString(
-                    MyEntity.Vital[(int)Vitals.Health], MyEntity.MaxVital[(int)Vitals.Health]
+                    MyEntity.Vital[(int) Vitals.Health], MyEntity.MaxVital[(int) Vitals.Health]
                 );
             }
             else
@@ -514,12 +509,12 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 targetHpWidth = HpBackground.Width;
             }
 
-            if ((int)targetHpWidth != CurHpWidth)
+            if ((int) targetHpWidth != CurHpWidth)
             {
-                if ((int)targetHpWidth > CurHpWidth)
+                if ((int) targetHpWidth > CurHpWidth)
                 {
                     CurHpWidth += 100f * elapsedTime;
-                    if (CurHpWidth > (int)targetHpWidth)
+                    if (CurHpWidth > (int) targetHpWidth)
                     {
                         CurHpWidth = targetHpWidth;
                     }
@@ -539,18 +534,18 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 }
                 else
                 {
-                    HpBar.Width = (int)CurHpWidth;
-                    HpBar.SetTextureRect(0, 0, (int)CurHpWidth, HpBar.Height);
+                    HpBar.Width = (int) CurHpWidth;
+                    HpBar.SetTextureRect(0, 0, (int) CurHpWidth, HpBar.Height);
                     HpBar.IsHidden = false;
                 }
             }
 
-            if ((int)targetShieldWidth != CurShieldWidth)
+            if ((int) targetShieldWidth != CurShieldWidth)
             {
-                if ((int)targetShieldWidth > CurShieldWidth)
+                if ((int) targetShieldWidth > CurShieldWidth)
                 {
                     CurShieldWidth += 100f * elapsedTime;
-                    if (CurShieldWidth > (int)targetShieldWidth)
+                    if (CurShieldWidth > (int) targetShieldWidth)
                     {
                         CurShieldWidth = targetShieldWidth;
                     }
@@ -570,10 +565,10 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 }
                 else
                 {
-                    ShieldBar.Width = (int)CurShieldWidth;
+                    ShieldBar.Width = (int) CurShieldWidth;
                     ShieldBar.SetBounds(CurHpWidth + HpBar.X, HpBar.Y, CurShieldWidth, ShieldBar.Height);
                     ShieldBar.SetTextureRect(
-                        (int)(HpBackground.Width - CurShieldWidth), 0, (int)CurShieldWidth, ShieldBar.Height
+                        (int) (HpBackground.Width - CurShieldWidth), 0, (int) CurShieldWidth, ShieldBar.Height
                     );
 
                     ShieldBar.IsHidden = false;
@@ -588,12 +583,12 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         private void UpdateMpBar(float elapsedTime)
         {
             var targetMpWidth = 0f;
-            if (MyEntity.MaxVital[(int)Vitals.Mana] > 0)
+            if (MyEntity.MaxVital[(int) Vitals.Mana] > 0)
             {
-                targetMpWidth = MyEntity.Vital[(int)Vitals.Mana] / (float)MyEntity.MaxVital[(int)Vitals.Mana];
+                targetMpWidth = MyEntity.Vital[(int) Vitals.Mana] / (float) MyEntity.MaxVital[(int) Vitals.Mana];
                 targetMpWidth = Math.Min(1, Math.Max(0, targetMpWidth));
                 MpLbl.Text = Strings.EntityBox.vital1val.ToString(
-                    MyEntity.Vital[(int)Vitals.Mana], MyEntity.MaxVital[(int)Vitals.Mana]
+                    MyEntity.Vital[(int) Vitals.Mana], MyEntity.MaxVital[(int) Vitals.Mana]
                 );
 
                 targetMpWidth *= MpBackground.Width;
@@ -604,12 +599,12 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 targetMpWidth = MpBackground.Width;
             }
 
-            if ((int)targetMpWidth != CurMpWidth)
+            if ((int) targetMpWidth != CurMpWidth)
             {
-                if ((int)targetMpWidth > CurMpWidth)
+                if ((int) targetMpWidth > CurMpWidth)
                 {
                     CurMpWidth += 100f * elapsedTime;
-                    if (CurMpWidth > (int)targetMpWidth)
+                    if (CurMpWidth > (int) targetMpWidth)
                     {
                         CurMpWidth = targetMpWidth;
                     }
@@ -629,8 +624,8 @@ namespace Intersect.Client.Interface.Game.EntityPanel
                 }
                 else
                 {
-                    MpBar.Width = (int)CurMpWidth;
-                    MpBar.SetTextureRect(0, 0, (int)CurMpWidth, MpBar.Height);
+                    MpBar.Width = (int) CurMpWidth;
+                    MpBar.SetTextureRect(0, 0, (int) CurMpWidth, MpBar.Height);
                     MpBar.IsHidden = false;
                 }
             }
@@ -639,13 +634,13 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         private void UpdateXpBar(float elapsedTime)
         {
             float targetExpWidth = 1;
-            if (((Player)MyEntity).GetNextLevelExperience() > 0)
+            if (((Player) MyEntity).GetNextLevelExperience() > 0)
             {
-                targetExpWidth = (float)((Player)MyEntity).Experience /
-                                 (float)((Player)MyEntity).GetNextLevelExperience();
+                targetExpWidth = (float) ((Player) MyEntity).Experience /
+                                 (float) ((Player) MyEntity).GetNextLevelExperience();
 
                 ExpLbl.Text = Strings.EntityBox.expval.ToString(
-                    ((Player)MyEntity)?.Experience, ((Player)MyEntity)?.GetNextLevelExperience()
+                    ((Player) MyEntity)?.Experience, ((Player) MyEntity)?.GetNextLevelExperience()
                 );
             }
             else
@@ -655,15 +650,15 @@ namespace Intersect.Client.Interface.Game.EntityPanel
             }
 
             targetExpWidth *= ExpBackground.Width;
-            if (Math.Abs((int)targetExpWidth - CurExpWidth) < 0.01)
+            if (Math.Abs((int) targetExpWidth - CurExpWidth) < 0.01)
             {
                 return;
             }
 
-            if ((int)targetExpWidth > CurExpWidth)
+            if ((int) targetExpWidth > CurExpWidth)
             {
                 CurExpWidth += 100f * elapsedTime;
-                if (CurExpWidth > (int)targetExpWidth)
+                if (CurExpWidth > (int) targetExpWidth)
                 {
                     CurExpWidth = targetExpWidth;
                 }
@@ -683,8 +678,8 @@ namespace Intersect.Client.Interface.Game.EntityPanel
             }
             else
             {
-                ExpBar.Width = (int)CurExpWidth;
-                ExpBar.SetTextureRect(0, 0, (int)CurExpWidth, ExpBar.Height);
+                ExpBar.Width = (int) CurExpWidth;
+                ExpBar.SetTextureRect(0, 0, (int) CurExpWidth, ExpBar.Height);
                 ExpBar.IsHidden = false;
             }
         }
@@ -849,7 +844,7 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         }
 
         //Input Handlers
-        private void invite_Clicked(Base sender, ClickedEventArgs arguments)
+        void invite_Clicked(Base sender, ClickedEventArgs arguments)
         {
             if (Globals.Me.TargetIndex != Guid.Empty && Globals.Me.TargetIndex != Globals.Me.Id)
             {
@@ -858,7 +853,7 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         }
 
         //Input Handlers
-        private void tradeRequest_Clicked(Base sender, ClickedEventArgs arguments)
+        void tradeRequest_Clicked(Base sender, ClickedEventArgs arguments)
         {
             if (Globals.Me.TargetIndex != Guid.Empty && Globals.Me.TargetIndex != Globals.Me.Id)
             {
@@ -867,12 +862,14 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         }
 
         //Input Handlers
-        private void friendRequest_Clicked(Base sender, ClickedEventArgs arguments)
+        void friendRequest_Clicked(Base sender, ClickedEventArgs arguments)
         {
             if (Globals.Me.TargetIndex != Guid.Empty && Globals.Me.TargetIndex != Globals.Me.Id)
             {
                 PacketSender.SendAddFriend(MyEntity.Name);
             }
         }
+
     }
+
 }

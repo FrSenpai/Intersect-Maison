@@ -11,8 +11,10 @@ using Intersect.Utilities;
 
 namespace Intersect.Client.Networking
 {
+
     public static class PacketSender
     {
+
         public static void SendPing()
         {
             Network.SendPacket(new PingPacket { Responding = true });
@@ -51,9 +53,9 @@ namespace Intersect.Client.Networking
             Network.SendPacket(new ChatMsgPacket(msg, channel));
         }
 
-        public static void SendAttack(Guid targetId, bool targetOnFocus)
+        public static void SendAttack(Guid targetId)
         {
-            Network.SendPacket(new AttackPacket(targetId, targetOnFocus));
+            Network.SendPacket(new AttackPacket(targetId));
         }
 
         public static void SendBlock(bool blocking)
@@ -86,7 +88,7 @@ namespace Intersect.Client.Networking
         {
             Network.SendPacket(
                 new EventInputVariablePacket(
-                    (Guid)((InputBox)sender).UserData, (int)((InputBox)sender).Value, ((InputBox)sender).TextValue
+                    (Guid) ((InputBox) sender).UserData, (int) ((InputBox) sender).Value, ((InputBox) sender).TextValue
                 )
             );
         }
@@ -95,7 +97,7 @@ namespace Intersect.Client.Networking
         {
             Network.SendPacket(
                 new EventInputVariablePacket(
-                    (Guid)((InputBox)sender).UserData, (int)((InputBox)sender).Value, ((InputBox)sender).TextValue,
+                    (Guid) ((InputBox) sender).UserData, (int) ((InputBox) sender).Value, ((InputBox) sender).TextValue,
                     true
                 )
             );
@@ -235,12 +237,12 @@ namespace Intersect.Client.Networking
 
         public static void SendPartyAccept(object sender, EventArgs e)
         {
-            Network.SendPacket(new PartyInviteResponsePacket((Guid)((InputBox)sender).UserData, true));
+            Network.SendPacket(new PartyInviteResponsePacket((Guid) ((InputBox) sender).UserData, true));
         }
 
         public static void SendPartyDecline(object sender, EventArgs e)
         {
-            Network.SendPacket(new PartyInviteResponsePacket((Guid)((InputBox)sender).UserData, false));
+            Network.SendPacket(new PartyInviteResponsePacket((Guid) ((InputBox) sender).UserData, false));
         }
 
         public static void SendAcceptQuest(Guid questId)
@@ -285,12 +287,12 @@ namespace Intersect.Client.Networking
 
         public static void SendTradeRequestAccept(object sender, EventArgs e)
         {
-            Network.SendPacket(new TradeRequestResponsePacket((Guid)((InputBox)sender).UserData, true));
+            Network.SendPacket(new TradeRequestResponsePacket((Guid) ((InputBox) sender).UserData, true));
         }
 
         public static void SendTradeRequestDecline(object sender, EventArgs e)
         {
-            Network.SendPacket(new TradeRequestResponsePacket((Guid)((InputBox)sender).UserData, false));
+            Network.SendPacket(new TradeRequestResponsePacket((Guid) ((InputBox) sender).UserData, false));
         }
 
         public static void SendStoreBagItem(int slot, int amount)
@@ -330,12 +332,12 @@ namespace Intersect.Client.Networking
 
         public static void SendFriendRequestAccept(Object sender, EventArgs e)
         {
-            Network.SendPacket(new FriendRequestResponsePacket((Guid)((InputBox)sender).UserData, true));
+            Network.SendPacket(new FriendRequestResponsePacket((Guid) ((InputBox) sender).UserData, true));
         }
 
         public static void SendFriendRequestDecline(Object sender, EventArgs e)
         {
-            Network.SendPacket(new FriendRequestResponsePacket((Guid)((InputBox)sender).UserData, false));
+            Network.SendPacket(new FriendRequestResponsePacket((Guid) ((InputBox) sender).UserData, false));
         }
 
         public static void SendSelectCharacter(Guid charId)
@@ -372,5 +374,7 @@ namespace Intersect.Client.Networking
         {
             Network.SendPacket(new BumpPacket(mapId, eventId));
         }
+
     }
+
 }

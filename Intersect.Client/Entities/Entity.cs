@@ -24,10 +24,13 @@ using JetBrains.Annotations;
 
 namespace Intersect.Client.Entities
 {
+
     public class Entity
     {
+
         public enum LabelType
         {
+
             Header = 0,
 
             Footer,
@@ -35,6 +38,7 @@ namespace Intersect.Client.Entities
             Name,
 
             ChatBubble
+
         }
 
         public int AnimationFrame;
@@ -47,7 +51,6 @@ namespace Intersect.Client.Entities
 
         //Combat
         public long AttackTimer { get; set; } = 0;
-
         public int AttackTime { get; set; } = -1;
 
         public bool Blocking = false;
@@ -93,8 +96,6 @@ namespace Intersect.Client.Entities
 
         public bool IsMoving;
 
-        public bool IsATarget = false;
-
         //Caching
         public MapInstance LatestMap;
 
@@ -118,7 +119,7 @@ namespace Intersect.Client.Entities
 
         protected string mMySprite = "";
 
-        public Color Color = new Color(255, 255, 255, 255);
+        public Color Color = new Color(255,255,255,255);
 
         public int MoveDir = -1;
 
@@ -156,7 +157,6 @@ namespace Intersect.Client.Entities
         public GameTexture Texture;
 
         #region "Animation Textures and Timing"
-
         public SpriteAnimations SpriteAnimation = SpriteAnimations.Normal;
 
         public Dictionary<SpriteAnimations, GameTexture> AnimatedTextures = new Dictionary<SpriteAnimations, GameTexture>();
@@ -166,8 +166,7 @@ namespace Intersect.Client.Entities
         public long SpriteFrameTimer = -1;
 
         public long LastActionTime = -1;
-
-        #endregion "Animation Textures and Timing"
+        #endregion
 
         public int Type;
 
@@ -274,24 +273,20 @@ namespace Intersect.Client.Entities
                 {
                     case SpriteAnimations.Normal:
                         return Options.Instance.Sprites.NormalFrames;
-
                     case SpriteAnimations.Idle:
                         return Options.Instance.Sprites.IdleFrames;
-
                     case SpriteAnimations.Attack:
                         return Options.Instance.Sprites.AttackFrames;
-
                     case SpriteAnimations.Shoot:
                         return Options.Instance.Sprites.ShootFrames;
-
                     case SpriteAnimations.Cast:
                         return Options.Instance.Sprites.CastFrames;
-
                     case SpriteAnimations.Weapon:
                         return Options.Instance.Sprites.WeaponFrames;
                 }
 
                 return Options.Instance.Sprites.NormalFrames;
+
             }
         }
 
@@ -628,8 +623,7 @@ namespace Intersect.Client.Entities
                         }
 
                         break;
-
-                    case 4: // NW
+                    case 4: // NW     
                         OffsetY -= deplacementTime;
                         OffsetX -= deplacementTime;
 
@@ -639,7 +633,6 @@ namespace Intersect.Client.Entities
                             OffsetX = 0;
 
                         break;
-
                     case 5: // NE
                         OffsetY -= deplacementTime;
                         OffsetX += deplacementTime;
@@ -650,7 +643,6 @@ namespace Intersect.Client.Entities
                             OffsetX = 0;
 
                         break;
-
                     case 6: //SW
                         OffsetY += deplacementTime;
                         OffsetX -= deplacementTime;
@@ -661,7 +653,6 @@ namespace Intersect.Client.Entities
                             OffsetX = 0;
 
                         break;
-
                     case 7: // SE
                         OffsetY += deplacementTime;
                         OffsetX += deplacementTime;
@@ -970,6 +961,7 @@ namespace Intersect.Client.Entities
                 MySprite = sprite;
             }
 
+
             var texture = AnimatedTextures[SpriteAnimation] ?? Texture;
 
             if (texture != null)
@@ -992,42 +984,34 @@ namespace Intersect.Client.Entities
                         d = 3;
 
                         break;
-
                     case 1:
                         d = 0;
 
                         break;
-
                     case 2:
                         d = 1;
 
                         break;
-
                     case 3:
                         d = 2;
 
                         break;
-
                     case 4: // UpLeft
                         d = 1;
 
                         break;
-
                     case 5: // UpRight
                         d = 2;
 
                         break;
-
                     case 6: // DownLeft
                         d = 1;
 
                         break;
-
                     case 7: // DownRight
                         d = 2;
 
                         break;
-
                     default:
                         Dir = 0;
                         d = 3;
@@ -1205,36 +1189,29 @@ namespace Intersect.Client.Entities
                         d = 3;
 
                         break;
-
                     case 1:
                         d = 0;
 
                         break;
-
                     case 2:
                         d = 1;
 
                         break;
-
                     case 3:
                         d = 2;
                         break;
-
                     case 4:
                         d = 1;
 
                         break;
-
                     case 5:
                         d = 2;
 
                         break;
-
                     case 6:
                         d = 1;
 
                         break;
-
                     case 7:
                         d = 2;
 
@@ -1439,22 +1416,18 @@ namespace Intersect.Client.Entities
                         color = CustomColors.Names.Npcs["Aggressive"];
 
                         break;
-
                     case 0: //Attack when attacked
                         color = CustomColors.Names.Npcs["AttackWhenAttacked"];
 
                         break;
-
                     case 1: //Attack on sight
                         color = CustomColors.Names.Npcs["AttackOnSight"];
 
                         break;
-
                     case 3: //Guard
                         color = CustomColors.Names.Npcs["Guard"];
 
                         break;
-
                     case 2: //Neutral
                     default:
                         color = CustomColors.Names.Npcs["Neutral"];
@@ -1509,7 +1482,7 @@ namespace Intersect.Client.Entities
             }
 
             Graphics.Renderer.DrawString(
-                name, Graphics.EntityNameFont, (int)(x - (int)Math.Ceiling(textSize.X / 2f)), (int)y, 1,
+                name, Graphics.EntityNameFont, (int) (x - (int) Math.Ceiling(textSize.X / 2f)), (int) y, 1,
                 Color.FromArgb(textColor.ToArgb()), true, null, Color.FromArgb(borderColor.ToArgb())
             );
         }
@@ -1530,7 +1503,6 @@ namespace Intersect.Client.Entities
                     y -= headerSize.Y;
 
                     break;
-
                 case LabelType.Footer:
                     if (string.IsNullOrWhiteSpace(FooterLabel.Text))
                     {
@@ -1541,7 +1513,6 @@ namespace Intersect.Client.Entities
                     y -= footerSize.Y - 8;
 
                     break;
-
                 case LabelType.Name:
                     y = GetLabelLocation(LabelType.Footer);
                     var nameSize = Graphics.Renderer.MeasureText(Name, Graphics.EntityNameFont, 1);
@@ -1555,7 +1526,6 @@ namespace Intersect.Client.Entities
                     }
 
                     break;
-
                 case LabelType.ChatBubble:
                     y = GetLabelLocation(LabelType.Header) - 4;
 
@@ -1947,5 +1917,10 @@ namespace Intersect.Client.Entities
         {
             Dispose();
         }
+
+
+
+
     }
+
 }
