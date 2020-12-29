@@ -25,10 +25,8 @@ using Newtonsoft.Json;
 
 namespace Intersect.Server.Entities
 {
-
     public partial class Entity : IDisposable
     {
-
         //Instance Values
         private Guid _id;
 
@@ -37,7 +35,8 @@ namespace Intersect.Server.Entities
         [NotMapped, JsonIgnore] public Stat[] Stat = new Stat[(int)Stats.StatCount];
 
         [NotMapped, JsonIgnore] public Entity Target = null;
-        [NotMapped, JsonIgnore] public byte Running = 0;
+        [NotMapped, JsonIgnore] public bool Running;
+
         public Entity() : this(Guid.NewGuid())
         {
         }
@@ -305,33 +304,40 @@ namespace Intersect.Server.Entities
                     yOffset--;
 
                     break;
+
                 case 1: //Down
                     yOffset++;
 
                     break;
+
                 case 2: //Left
                     xOffset--;
 
                     break;
+
                 case 3: //Right
                     xOffset++;
 
                     break;
+
                 case 4: //NW
                     yOffset--;
                     xOffset--;
 
                     break;
+
                 case 5: //NE
                     yOffset--;
                     xOffset++;
 
                     break;
+
                 case 6: //SW
                     yOffset++;
                     xOffset--;
 
                     break;
+
                 case 7: //SE
                     yOffset++;
                     xOffset++;
@@ -377,6 +383,7 @@ namespace Intersect.Server.Entities
                                 }
 
                                 break;
+
                             case 2:
                                 if (moveDir == 0)
                                 {
@@ -384,6 +391,7 @@ namespace Intersect.Server.Entities
                                 }
 
                                 break;
+
                             case 3:
                                 if (moveDir == 3)
                                 {
@@ -391,6 +399,7 @@ namespace Intersect.Server.Entities
                                 }
 
                                 break;
+
                             case 4:
                                 if (moveDir == 2)
                                 {
@@ -495,6 +504,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveDown:
                         if (CanMove((int)Directions.Down) == -1)
                         {
@@ -503,6 +513,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveLeft:
                         if (CanMove((int)Directions.Left) == -1)
                         {
@@ -511,6 +522,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveRight:
                         if (CanMove((int)Directions.Right) == -1)
                         {
@@ -518,6 +530,7 @@ namespace Intersect.Server.Entities
                             moved = true;
                         }
                         break;
+
                     case MoveRouteEnum.MoveUpLeft:
                         if (CanMove((int)Directions.UpLeft) == -1)
                         {
@@ -526,6 +539,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveUpRight:
                         if (CanMove((int)Directions.UpRight) == -1)
                         {
@@ -534,6 +548,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveDownLeft:
                         if (CanMove((int)Directions.DownLeft) == -1)
                         {
@@ -542,6 +557,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.MoveDownRight:
                         if (CanMove((int)Directions.DownRight) == -1)
                         {
@@ -549,6 +565,7 @@ namespace Intersect.Server.Entities
                             moved = true;
                         }
                         break;
+
                     case MoveRouteEnum.MoveRandomly:
                         var dir = (byte)Randomization.Next(0, 8);
                         if (CanMove(dir) == -1)
@@ -558,6 +575,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.StepForward:
                         if (CanMove(Dir) > -1)
                         {
@@ -566,6 +584,7 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.StepBack:
                         switch (Dir)
                         {
@@ -573,29 +592,36 @@ namespace Intersect.Server.Entities
                                 moveDir = (int)Directions.Down;
 
                                 break;
+
                             case (int)Directions.Down:
                                 moveDir = (int)Directions.Up;
 
                                 break;
+
                             case (int)Directions.Left:
                                 moveDir = (int)Directions.Right;
 
                                 break;
+
                             case (int)Directions.Right:
                                 moveDir = (int)Directions.Left;
                                 break;
+
                             case (int)Directions.UpLeft:
                                 moveDir = (int)Directions.DownRight;
 
                                 break;
+
                             case (int)Directions.UpRight:
                                 moveDir = (int)Directions.DownLeft;
 
                                 break;
+
                             case (int)Directions.DownLeft:
                                 moveDir = (int)Directions.UpRight;
 
                                 break;
+
                             case (int)Directions.DownRight:
                                 moveDir = (int)Directions.UpLeft;
                                 break;
@@ -608,26 +634,31 @@ namespace Intersect.Server.Entities
                         }
 
                         break;
+
                     case MoveRouteEnum.FaceUp:
                         ChangeDir((int)Directions.Up);
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.FaceDown:
                         ChangeDir((int)Directions.Down);
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.FaceLeft:
                         ChangeDir((int)Directions.Left);
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.FaceRight:
                         ChangeDir((int)Directions.Right);
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Turn90Clockwise:
                         switch (Dir)
                         {
@@ -635,30 +666,37 @@ namespace Intersect.Server.Entities
                                 lookDir = (int)Directions.Right;
 
                                 break;
+
                             case (int)Directions.Down:
                                 lookDir = (int)Directions.Left;
 
                                 break;
+
                             case (int)Directions.Left:
                                 lookDir = (int)Directions.Up;
 
                                 break;
+
                             case (int)Directions.Right:
                                 lookDir = (int)Directions.Down;
 
                                 break;
+
                             case (int)Directions.UpLeft:
                                 lookDir = (int)Directions.UpRight;
 
                                 break;
+
                             case (int)Directions.UpRight:
                                 lookDir = (int)Directions.DownRight;
 
                                 break;
+
                             case (int)Directions.DownLeft:
                                 lookDir = (int)Directions.UpLeft;
 
                                 break;
+
                             case (int)Directions.DownRight:
                                 lookDir = (int)Directions.DownLeft;
 
@@ -669,6 +707,7 @@ namespace Intersect.Server.Entities
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Turn90CounterClockwise:
                         switch (Dir)
                         {
@@ -676,30 +715,37 @@ namespace Intersect.Server.Entities
                                 lookDir = (int)Directions.Left;
 
                                 break;
+
                             case (int)Directions.Down:
                                 lookDir = (int)Directions.Right;
 
                                 break;
+
                             case (int)Directions.Left:
                                 lookDir = (int)Directions.Down;
 
                                 break;
+
                             case (int)Directions.Right:
                                 lookDir = (int)Directions.Up;
 
                                 break;
+
                             case (int)Directions.UpLeft:
                                 lookDir = (int)Directions.DownLeft;
 
                                 break;
+
                             case (int)Directions.UpRight:
                                 lookDir = (int)Directions.UpLeft;
 
                                 break;
+
                             case (int)Directions.DownLeft:
                                 lookDir = (int)Directions.DownRight;
 
                                 break;
+
                             case (int)Directions.DownRight:
                                 lookDir = (int)Directions.UpRight;
 
@@ -710,6 +756,7 @@ namespace Intersect.Server.Entities
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Turn180:
                         switch (Dir)
                         {
@@ -717,29 +764,36 @@ namespace Intersect.Server.Entities
                                 lookDir = (int)Directions.Down;
 
                                 break;
+
                             case (int)Directions.Down:
                                 lookDir = (int)Directions.Up;
 
                                 break;
+
                             case (int)Directions.Left:
                                 lookDir = (int)Directions.Right;
 
                                 break;
+
                             case (int)Directions.Right:
                                 lookDir = (int)Directions.Left;
                                 break;
+
                             case (int)Directions.UpLeft:
                                 lookDir = (int)Directions.DownRight;
 
                                 break;
+
                             case (int)Directions.UpRight:
                                 lookDir = (int)Directions.DownLeft;
 
                                 break;
+
                             case (int)Directions.DownLeft:
                                 lookDir = (int)Directions.UpRight;
 
                                 break;
+
                             case (int)Directions.DownRight:
                                 lookDir = (int)Directions.UpLeft;
                                 break;
@@ -749,26 +803,31 @@ namespace Intersect.Server.Entities
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.TurnRandomly:
                         ChangeDir((byte)Randomization.Next(0, 8));
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Wait100:
                         MoveTimer = Globals.Timing.Milliseconds + 100;
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Wait500:
                         MoveTimer = Globals.Timing.Milliseconds + 500;
                         moved = true;
 
                         break;
+
                     case MoveRouteEnum.Wait1000:
                         MoveTimer = Globals.Timing.Milliseconds + 1000;
                         moved = true;
 
                         break;
+
                     default:
                         //Gonna end up returning false because command not found
                         return false;
@@ -806,7 +865,7 @@ namespace Intersect.Server.Entities
         public virtual float GetMovementTime()
         {
             var time = 1000f / (float)(1 + Math.Log(Stat[(int)Stats.Speed].Value()));
-            if (Running == 1)
+            if (Running)
             {
                 time *= 0.5f;
             }
@@ -838,33 +897,40 @@ namespace Intersect.Server.Entities
                     --yOffset;
 
                     break;
+
                 case 1: //Down
                     ++yOffset;
 
                     break;
+
                 case 2: //Left
                     --xOffset;
 
                     break;
+
                 case 3: //Right
                     ++xOffset;
 
                     break;
+
                 case 4: //NW
                     --yOffset;
                     --xOffset;
 
                     break;
+
                 case 5: //NE
                     --yOffset;
                     ++xOffset;
 
                     break;
+
                 case 6: //SW
                     ++yOffset;
                     --xOffset;
 
                     break;
+
                 case 7: //SE
                     ++yOffset;
                     ++xOffset;
@@ -910,7 +976,6 @@ namespace Intersect.Server.Entities
                             }
                         }
                     }
-
                 }
 
                 MapId = tile.GetMapId();
@@ -1850,12 +1915,14 @@ namespace Intersect.Server.Entities
                             );
 
                             break;
+
                         case DamageType.Magic:
                             PacketSender.SendActionMsg(
                                 enemy, Strings.Combat.removesymbol + (int)baseDamage, CustomColors.Combat.MagicDamage
                             );
 
                             break;
+
                         case DamageType.True:
                             PacketSender.SendActionMsg(
                                 enemy, Strings.Combat.removesymbol + (int)baseDamage, CustomColors.Combat.TrueDamage
@@ -2027,7 +2094,7 @@ namespace Intersect.Server.Entities
             }
         }
 
-        void CheckForOnhitAttack(Entity enemy, bool isAutoAttack)
+        private void CheckForOnhitAttack(Entity enemy, bool isAutoAttack)
         {
             if (isAutoAttack) //Ignore spell damage.
             {
@@ -2104,6 +2171,7 @@ namespace Intersect.Server.Entities
                             TryAttack(this, spellBase);
 
                             break;
+
                         case SpellTargetTypes.Single:
                             if (CastTarget == null)
                             {
@@ -2132,10 +2200,12 @@ namespace Intersect.Server.Entities
                             }
 
                             break;
+
                         case SpellTargetTypes.AoE:
                             HandleAoESpell(spellId, spellBase.Combat.HitRadius, MapId, X, Y, null);
 
                             break;
+
                         case SpellTargetTypes.Projectile:
                             var projectileBase = spellBase.Combat.Projectile;
                             if (projectileBase != null)
@@ -2148,6 +2218,7 @@ namespace Intersect.Server.Entities
                             }
 
                             break;
+
                         case SpellTargetTypes.OnHit:
                             if (spellBase.Combat.Effect == StatusTypes.OnHit)
                             {
@@ -2163,6 +2234,7 @@ namespace Intersect.Server.Entities
                             }
 
                             break;
+
                         case SpellTargetTypes.Trap:
                             MapInstance.Get(MapId).SpawnTrap(this, spellBase, (byte)X, (byte)Y, (byte)Z);
                             PacketSender.SendAnimationToProximity(
@@ -2170,11 +2242,13 @@ namespace Intersect.Server.Entities
                             );
 
                             break;
+
                         default:
                             break;
                     }
 
                     break;
+
                 case SpellTypes.Warp:
                     if (this is Player)
                     {
@@ -2185,6 +2259,7 @@ namespace Intersect.Server.Entities
                     }
 
                     break;
+
                 case SpellTypes.WarpTo:
                     if (CastTarget == null)
                     {
@@ -2196,6 +2271,7 @@ namespace Intersect.Server.Entities
                     HandleAoESpell(spellId, spellBase.Combat.CastRange, MapId, X, Y, CastTarget);
 
                     break;
+
                 case SpellTypes.Dash:
                     PacketSender.SendActionMsg(this, Strings.Combat.dash, CustomColors.Combat.Dash);
                     var dash = new Dash(
@@ -2206,6 +2282,7 @@ namespace Intersect.Server.Entities
                     );
 
                     break;
+
                 default:
                     break;
             }
@@ -2404,7 +2481,7 @@ namespace Intersect.Server.Entities
             {
                 return GetDistanceTo(target.Map, target.X, target.Y);
             }
-            //Something is null.. return a value that is out of range :) 
+            //Something is null.. return a value that is out of range :)
             return 9999;
         }
 
@@ -2425,7 +2502,7 @@ namespace Intersect.Server.Entities
                 return (int)Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
             }
 
-            //Something is null.. return a value that is out of range :) 
+            //Something is null.. return a value that is out of range :)
             return 9999;
         }
 
@@ -2736,8 +2813,6 @@ namespace Intersect.Server.Entities
 
         [NotMapped] public Dictionary<Guid, long> SpellCooldowns = new Dictionary<Guid, long>();
 
-        #endregion
-
+        #endregion Spell Cooldowns
     }
-
 }

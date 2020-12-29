@@ -1,9 +1,7 @@
 ﻿namespace Intersect.Enums
 {
-
     public enum CommonEventTrigger
     {
-
         None = 0,
 
         Login,
@@ -21,7 +19,5 @@
         PVPDeath,
 
         PlayerInteract
-
     }
-
 }

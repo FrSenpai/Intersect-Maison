@@ -17,10 +17,8 @@ using JetBrains.Annotations;
 
 namespace Intersect.Client.Interface.Game
 {
-
     public class GameInterface : MutableInterface
     {
-
         public bool FocusChat;
 
         //Public Components - For clicking/dragging
@@ -83,7 +81,7 @@ namespace Intersect.Client.Interface.Game
         public GameInterface([NotNull] Canvas canvas) : base(canvas)
         {
             GameCanvas = canvas;
-            EscapeMenu = new EscapeMenu(GameCanvas) {IsHidden = true};
+            EscapeMenu = new EscapeMenu(GameCanvas) { IsHidden = true };
             AnnouncementWindow = new AnnouncementWindow(GameCanvas) { IsHidden = true };
 
             InitGameGui();
@@ -527,7 +525,5 @@ namespace Intersect.Client.Interface.Game
             CloseTrading();
             GameCanvas.Dispose();
         }
-
     }
-
 }

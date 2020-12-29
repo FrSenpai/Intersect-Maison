@@ -801,14 +801,8 @@ namespace Intersect.Client.Entities
                 movex = 1;
             }
 
-            if (Controls.KeyDown(Control.Running))
-            {
-                Running = 1;
-            }
-            else
-            {
-                Running = 0;
-            }
+            Running = Controls.KeyDown(Control.Running);
+
             // Used this so I can do multiple switch case
             var move = movex / 10 + movey;
 

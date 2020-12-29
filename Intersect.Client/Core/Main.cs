@@ -17,10 +17,8 @@ using Intersect.GameObjects.Maps;
 
 namespace Intersect.Client.Core
 {
-
     public static class Main
     {
-
         private static long _animTimer;
 
         private static bool _createdMapTextures;
@@ -44,7 +42,7 @@ namespace Intersect.Client.Core
             var id = Guid.NewGuid();
             foreach (var val in Enum.GetValues(typeof(GameObjectType)))
             {
-                var type = ((GameObjectType) val);
+                var type = ((GameObjectType)val);
                 if (type != GameObjectType.Event && type != GameObjectType.Time)
                 {
                     var lookup = type.GetLookup();
@@ -372,7 +370,7 @@ namespace Intersect.Client.Core
             Globals.HasGameData = false;
             foreach (var map in MapInstance.Lookup)
             {
-                var mp = (MapInstance) map.Value;
+                var mp = (MapInstance)map.Value;
                 mp.Dispose(false, true);
             }
 
@@ -394,7 +392,5 @@ namespace Intersect.Client.Core
             Interface.Interface.InitGwen();
             Fade.FadeIn();
         }
-
     }
-
 }

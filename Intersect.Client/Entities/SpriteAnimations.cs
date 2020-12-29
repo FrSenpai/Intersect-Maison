@@ -8,7 +8,6 @@
         Shoot,
         Cast,
         Weapon,
+        Run
     }
-
-
 }

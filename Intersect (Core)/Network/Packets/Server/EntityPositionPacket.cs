@@ -4,10 +4,8 @@ using Intersect.Enums;
 
 namespace Intersect.Network.Packets.Server
 {
-
     public class EntityPositionPacket : AbstractTimedPacket
     {
-
         public EntityPositionPacket(
             Guid id,
             EntityTypes type,
@@ -17,7 +15,7 @@ namespace Intersect.Network.Packets.Server
             byte direction,
             bool passable,
             bool hideName,
-            byte run
+            bool run
         )
         {
             Id = id;
@@ -47,8 +45,6 @@ namespace Intersect.Network.Packets.Server
 
         public bool HideName { get; set; }
 
-        public byte Run { get; set; }
-
+        public bool Run { get; set; }
     }
-
 }

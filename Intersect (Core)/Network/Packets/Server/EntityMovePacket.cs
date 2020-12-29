@@ -4,11 +4,9 @@ using Intersect.Enums;
 
 namespace Intersect.Network.Packets.Server
 {
-
     public class EntityMovePacket : CerasPacket
     {
-
-        public EntityMovePacket(Guid id, EntityTypes type, Guid mapId, byte x, byte y, byte dir, bool correction, byte run)
+        public EntityMovePacket(Guid id, EntityTypes type, Guid mapId, byte x, byte y, byte dir, bool correction, bool run)
         {
             Id = id;
             Type = type;
@@ -33,9 +31,6 @@ namespace Intersect.Network.Packets.Server
         public byte Direction { get; set; }
 
         public bool Correction { get; set; }
-        public byte Run { get; set; }
-
-
+        public bool Run { get; set; }
     }
-
 }

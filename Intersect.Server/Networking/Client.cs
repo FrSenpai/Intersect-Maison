@@ -12,10 +12,8 @@ using Intersect.Server.General;
 
 namespace Intersect.Server.Networking
 {
-
     public class Client
     {
-
         public Guid EditorMap = Guid.Empty;
 
         //Client Properties
@@ -192,7 +190,6 @@ namespace Intersect.Server.Networking
             DbInterface.SavePlayerDatabaseAsync();
 
             Entity.TryLogout();
-
             Entity.Client = null;
             Entity = null;
         }
@@ -250,7 +247,5 @@ namespace Intersect.Server.Networking
                 TimeoutMs += 1000 * AccountAttempts;
             }
         }
-
     }
-
 }

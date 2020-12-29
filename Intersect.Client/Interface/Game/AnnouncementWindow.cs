@@ -11,7 +11,6 @@ namespace Intersect.Client.Interface.Game
     /// </summary>
     public class AnnouncementWindow
     {
-
         //Controls
         private Canvas mGameCanvas;
 
@@ -38,11 +37,11 @@ namespace Intersect.Client.Interface.Game
         /// <param name="gameCanvas">The <see cref="Canvas"/> to render this control on.</param>
         public AnnouncementWindow(Canvas gameCanvas)
         {
-           mGameCanvas = gameCanvas;
-           mPicture = new ImagePanel(gameCanvas, "AnnouncementWindow");
-           mLabel = new Label(mPicture, "AnnouncementLabel");
-        
-           mPicture.LoadJsonUi(GameContentManager.UI.InGame, Graphics.Renderer.GetResolutionString());
+            mGameCanvas = gameCanvas;
+            mPicture = new ImagePanel(gameCanvas, "AnnouncementWindow");
+            mLabel = new Label(mPicture, "AnnouncementLabel");
+
+            mPicture.LoadJsonUi(GameContentManager.UI.InGame, Graphics.Renderer.GetResolutionString());
         }
 
         /// <summary>
@@ -90,7 +89,5 @@ namespace Intersect.Client.Interface.Game
         {
             mPicture.Show();
         }
-
     }
-
 }

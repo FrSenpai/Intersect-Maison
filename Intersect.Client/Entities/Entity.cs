@@ -185,7 +185,7 @@ namespace Intersect.Client.Entities
         public byte Z;
 
         // Running System
-        public byte Running = 0;
+        public bool Running;
 
         public Entity(Guid id, EntityPacket packet, bool isEvent = false)
         {
@@ -484,7 +484,7 @@ namespace Intersect.Client.Entities
         public virtual float GetMovementTime()
         {
             var time = 1000f / (float)(1 + Math.Log(Stat[(int)Stats.Speed]));
-            if (Running == 1)
+            if (Running)
             {
                 time *= 0.5f;
             }
@@ -1822,10 +1822,20 @@ namespace Intersect.Client.Entities
                 return;
             }
 
-            SpriteAnimation = AnimatedTextures[SpriteAnimations.Idle] != null && LastActionTime + Options.Instance.Sprites.TimeBeforeIdle < Globals.System.GetTimeMs() ? SpriteAnimations.Idle : SpriteAnimations.Normal;
+            if (AnimatedTextures[SpriteAnimations.Idle] != null && LastActionTime + Options.Instance.Sprites.TimeBeforeIdle < Globals.System.GetTimeMs())
+            {
+                SpriteAnimation = SpriteAnimations.Idle;
+            }
             if (IsMoving)
             {
-                SpriteAnimation = SpriteAnimations.Normal;
+                if (Running)
+                {
+                    SpriteAnimation = SpriteAnimations.Run;
+                }
+                else
+                {
+                    SpriteAnimation = SpriteAnimations.Normal;
+                }
                 LastActionTime = Globals.System.GetTimeMs();
             }
             else if (AttackTimer > Timing.Global.Ticks / TimeSpan.TicksPerMillisecond) //Attacking
@@ -1901,7 +1911,7 @@ namespace Intersect.Client.Entities
             {
                 ResetSpriteFrame();
             }
-            else if (SpriteAnimation == SpriteAnimations.Idle)
+            else if (SpriteAnimation == SpriteAnimations.Idle || SpriteAnimation == SpriteAnimations.Run)
             {
                 if (SpriteFrameTimer + Options.Instance.Sprites.IdleFrameDuration < Globals.System.GetTimeMs())
                 {
