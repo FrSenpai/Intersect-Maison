@@ -143,6 +143,16 @@
             Sets a custom mouse cursor.
             </summary>
         </member>
+        <member name="F:Intersect.Config.ChatOptions.ShowAnnouncementBanners">
+            <summary>
+            Is the client allowed to show in-game banners for announcements made?
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.ChatOptions.AnnouncementDisplayDuration">
+            <summary>
+            The time (in milliseconds) the announcement banners should display, if enabled.
+            </summary>
+        </member>
         <member name="T:Intersect.Config.LootOptions">
             <summary>
             Contains configurable options pertaining to the way loot (item) drops are handled by the engine.
@@ -356,6 +366,34 @@
         <member name="P:Intersect.Config.SpriteOptions.Directions">
             <summary>
             Defines the number of rows in sprite sheets which will correlate to the number of directions in the game (Intersect is programmed by default with only 4 directions)
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.CombatOptions.MatchGroupCooldowns">
+            <summary>
+            Configures whether cooldowns within cooldown groups should match.
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.CombatOptions.MatchGroupCooldownHighest">
+            <summary>
+            Only used when <seealso cref="F:Intersect.Config.CombatOptions.MatchGroupCooldowns"/> is enabled!
+            Configures whether cooldowns are being matched to the highest cooldown within a cooldown group when true, or are matched to the current item or spell being used when false.
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.CombatOptions.LinkSpellAndItemCooldowns">
+            <summary>
+            Only used when <seealso cref="F:Intersect.Config.CombatOptions.MatchGroupCooldowns"/> is enabled!
+            Configures whether cooldown groups between items and spells are shared.
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.CombatOptions.EnableGlobalCooldowns">
+            <summary>
+            Configures whether or not using a spell or item should trigger a global cooldown.
+            </summary>
+        </member>
+        <member name="F:Intersect.Config.CombatOptions.GlobalCooldownDuration">
+            <summary>
+            Configures the duration (in milliseconds) which the global cooldown lasts after each ability.
+            Only used when <seealso cref="F:Intersect.Config.CombatOptions.EnableGlobalCooldowns"/> is enabled!
             </summary>
         </member>
         <member name="F:Intersect.Config.PlayerOptions.ItemDropChance">
@@ -1411,6 +1449,16 @@
         <member name="P:Intersect.GameObjects.ClassBase.Folder">
             <inheritdoc />
         </member>
+        <member name="P:Intersect.GameObjects.ItemBase.CooldownGroup">
+            <summary>
+            Defines which cooldown group this item belongs to.
+            </summary>
+        </member>
+        <member name="P:Intersect.GameObjects.ItemBase.IgnoreGlobalCooldown">
+            <summary>
+            Configures whether this should not trigger and be triggered by the global cooldown.
+            </summary>
+        </member>
         <member name="P:Intersect.GameObjects.ItemBase.JsonColor">
             <summary>
             The database compatible version of <see cref="P:Intersect.GameObjects.ItemBase.Color"/>
@@ -1423,6 +1471,13 @@
         </member>
         <member name="P:Intersect.GameObjects.ItemBase.Folder">
             <inheritdoc />
+        </member>
+        <member name="M:Intersect.GameObjects.ItemBase.GetCooldownGroup(System.String)">
+            <summary>
+            Gets an array of all items sharing the provided cooldown group.
+            </summary>
+            <param name="cooldownGroup">The cooldown group to search for.</param>
+            <returns>Returns an array of <see cref="T:Intersect.GameObjects.ItemBase"/> containing all items with the supplied cooldown group.</returns>
         </member>
         <member name="P:Intersect.GameObjects.NpcBase.JsonColor">
             <summary>
@@ -1501,8 +1556,25 @@
         <member name="P:Intersect.GameObjects.ShopBase.Folder">
             <inheritdoc />
         </member>
+        <member name="P:Intersect.GameObjects.SpellBase.CooldownGroup">
+            <summary>
+            Defines which cooldown group this spell belongs to.
+            </summary>
+        </member>
+        <member name="P:Intersect.GameObjects.SpellBase.IgnoreGlobalCooldown">
+            <summary>
+            Configures whether this should not trigger and be triggered by the global cooldown.
+            </summary>
+        </member>
         <member name="P:Intersect.GameObjects.SpellBase.Folder">
             <inheritdoc />
+        </member>
+        <member name="M:Intersect.GameObjects.SpellBase.GetCooldownGroup(System.String)">
+            <summary>
+            Gets an array of all items sharing the provided cooldown group.
+            </summary>
+            <param name="cooldownGroup">The cooldown group to search for.</param>
+            <returns>Returns an array of <see cref="T:Intersect.GameObjects.ItemBase"/> containing all items with the supplied cooldown group.</returns>
         </member>
         <member name="M:Intersect.IO.Files.FileSystemHelper.EnsureDirectoryExists(System.String)">
             <summary>
@@ -1540,6 +1612,28 @@
             <summary>
             Used to group editor items together into folders with the same name
             </summary>
+        </member>
+        <member name="T:Intersect.Network.Packets.Server.AnnouncementPacket">
+            <summary>
+            Defines the layout for an AnnouncementPacket.
+            </summary>
+        </member>
+        <member name="P:Intersect.Network.Packets.Server.AnnouncementPacket.Message">
+            <summary>
+            The announcement message to send.
+            </summary>
+        </member>
+        <member name="P:Intersect.Network.Packets.Server.AnnouncementPacket.Duration">
+            <summary>
+            The time (in milliseconds) for the announcement to display.
+            </summary>
+        </member>
+        <member name="M:Intersect.Network.Packets.Server.AnnouncementPacket.#ctor(System.String,System.Int64)">
+            <summary>
+            Creates a new instance of the <see cref="T:Intersect.Network.Packets.Server.AnnouncementPacket"/> class.
+            </summary>
+            <param name="message">The message to send to the client.</param>
+            <param name="duration">The duration for this message to appear for on the client.</param>
         </member>
         <member name="M:Intersect.Network.CerasPacket.Dispose">
             <inheritdoc />

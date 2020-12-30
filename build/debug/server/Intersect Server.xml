@@ -422,6 +422,48 @@
             <param name="quantity">The quantity of the item to look for.</param>
             <returns>A list of <see cref="T:Intersect.Server.Database.PlayerData.Players.InventorySlot"/> containing the requested item.</returns>
         </member>
+        <member name="M:Intersect.Server.Entities.Player.UpdateCooldown(Intersect.GameObjects.ItemBase)">
+            <summary>
+            Update the cooldown for a specific item.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.GameObjects.ItemBase"/> to update the cooldown for.</param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.UpdateCooldown(Intersect.GameObjects.SpellBase)">
+            <summary>
+            Update the cooldown for a specific spell.
+            </summary>
+            <param name="item">The <see cref="T:Intersect.GameObjects.SpellBase"/> to update the cooldown for.</param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.UpdateGlobalCooldown">
+            <summary>
+            Forces an update of the global cooldown.
+            Does nothing when disabled by configuration.
+            </summary>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.UpdateCooldownGroup(Intersect.Enums.GameObjectType,System.String,System.Int32)">
+            <summary>
+            Update all cooldowns within the specified cooldown group on a type of object, or all when configured as such.
+            </summary>
+            <param name="type">The <see cref="T:Intersect.Enums.GameObjectType"/> to set trigger the cooldown group for. Currently only accepts Items and Spells</param>
+            <param name="group">The cooldown group to trigger.</param>
+            <param name="cooldown">The base cooldown of the object that triggered this cooldown group.</param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.AssignItemCooldown(System.Guid,System.Int64)">
+            <summary>
+            Assign a cooldown time to a specified item.
+            WARNING: Makes no checks at all to see whether this SHOULD happen!
+            </summary>
+            <param name="itemId">The <see cref="T:Intersect.GameObjects.ItemBase"/> id to assign the cooldown for.</param>
+            <param name="cooldownTime">The cooldown time to assign.</param>
+        </member>
+        <member name="M:Intersect.Server.Entities.Player.AssignSpellCooldown(System.Guid,System.Int64)">
+            <summary>
+            Assign a cooldown time to a specified spell.
+            WARNING: Makes no checks at all to see whether this SHOULD happen!
+            </summary>
+            <param name="itemId">The <see cref="T:Intersect.GameObjects.SpellBase"/> id to assign the cooldown for.</param>
+            <param name="cooldownTime">The cooldown time to assign.</param>
+        </member>
         <member name="M:Intersect.Server.Entities.Events.EventPageInstance.Move(System.Int32,Intersect.Server.Entities.Player,System.Boolean,System.Boolean)">
             <inheritdoc />
         </member>
@@ -612,6 +654,13 @@
             <summary>
             Number of "grace" packets that the client has remaining if speedhacking is accidentally detected.
             </summary>
+        </member>
+        <member name="M:Intersect.Server.Networking.PacketSender.SendGameAnnouncement(System.String,System.Int64)">
+            <summary>
+            Send a game announcement to all players.
+            </summary>
+            <param name="message">The message to send as an announcement.</param>
+            <param name="duration">The duration (in milliseconds) for the message to display.</param>
         </member>
         <member name="T:Intersect.Server.Plugins.Helpers.IServerLifecycleHelper">
             <summary>
