@@ -554,17 +554,17 @@ namespace Intersect.Server.Entities
 
             packet = base.EntityPacket(packet, forPlayer);
 
-            var pkt = (PlayerEntityPacket) packet;
+            var pkt = (PlayerEntityPacket)packet;
             pkt.Gender = Gender;
             pkt.ClassId = ClassId;
 
             if (Power.IsAdmin)
             {
-                pkt.AccessLevel = (int) Access.Admin;
+                pkt.AccessLevel = (int)Access.Admin;
             }
             else if (Power.IsModerator)
             {
-                pkt.AccessLevel = (int) Access.Moderator;
+                pkt.AccessLevel = (int)Access.Moderator;
             }
             else
             {
@@ -578,8 +578,8 @@ namespace Intersect.Server.Entities
 
             if (forPlayer != null && GetType() == typeof(Player))
             {
-                ((PlayerEntityPacket) packet).Equipment =
-                    PacketSender.GenerateEquipmentPacket(forPlayer, (Player) this);
+                ((PlayerEntityPacket)packet).Equipment =
+                    PacketSender.GenerateEquipmentPacket(forPlayer, (Player)this);
             }
 
             return pkt;
@@ -601,7 +601,7 @@ namespace Intersect.Server.Entities
             var cls = ClassBase.Get(ClassId);
             if (cls != null)
             {
-                Warp(cls.SpawnMapId, (byte) cls.SpawnX, (byte) cls.SpawnY, (byte) cls.SpawnDir);
+                Warp(cls.SpawnMapId, (byte)cls.SpawnX, (byte)cls.SpawnY, (byte)cls.SpawnDir);
             }
             else
             {
@@ -655,7 +655,7 @@ namespace Intersect.Server.Entities
                     continue;
                 }
 
-                var vitalId = (int) vital;
+                var vitalId = (int)vital;
                 var vitalValue = GetVital(vital);
                 var maxVitalValue = GetMaxVital(vital);
                 if (vitalValue >= maxVitalValue)
@@ -664,7 +664,7 @@ namespace Intersect.Server.Entities
                 }
 
                 var vitalRegenRate = (playerClass.VitalRegen[vitalId] + GetEquipmentVitalRegen(vital)) / 100f;
-                var regenValue = (int) Math.Max(1, maxVitalValue * vitalRegenRate) *
+                var regenValue = (int)Math.Max(1, maxVitalValue * vitalRegenRate) *
                                  Math.Abs(Math.Sign(vitalRegenRate));
 
                 AddVital(vital, regenValue);
@@ -679,8 +679,8 @@ namespace Intersect.Server.Entities
             {
                 if (classDescriptor.IncreasePercentage)
                 {
-                    classVital = (int) (classDescriptor.BaseVital[vital] *
-                                        Math.Pow(1 + (double) classDescriptor.VitalIncrease[vital] / 100, Level - 1));
+                    classVital = (int)(classDescriptor.BaseVital[vital] *
+                                        Math.Pow(1 + (double)classDescriptor.VitalIncrease[vital] / 100, Level - 1));
                 }
                 else
                 {
@@ -691,11 +691,11 @@ namespace Intersect.Server.Entities
             var baseVital = classVital;
 
             // TODO: Alternate implementation for the loop
-//            classVital += Equipment?.Select(equipment => ItemBase.Get(Items.ElementAt(equipment)?.ItemId ?? Guid.Empty))
-//                .Sum(
-//                    itemDescriptor => itemDescriptor.VitalsGiven[vital] +
-//                                      (itemDescriptor.PercentageVitalsGiven[vital] * baseVital) / 100
-//                ) ?? 0;
+            //            classVital += Equipment?.Select(equipment => ItemBase.Get(Items.ElementAt(equipment)?.ItemId ?? Guid.Empty))
+            //                .Sum(
+            //                    itemDescriptor => itemDescriptor.VitalsGiven[vital] +
+            //                                      (itemDescriptor.PercentageVitalsGiven[vital] * baseVital) / 100
+            //                ) ?? 0;
             // Loop through equipment and see if any items grant vital buffs
             for (var i = 0; i < Options.EquipmentSlots.Count; i++)
             {
@@ -713,11 +713,11 @@ namespace Intersect.Server.Entities
             }
 
             //Must have at least 1 hp and no less than 0 mp
-            if (vital == (int) Vitals.Health)
+            if (vital == (int)Vitals.Health)
             {
                 classVital = Math.Max(classVital, 1);
             }
-            else if (vital == (int) Vitals.Mana)
+            else if (vital == (int)Vitals.Mana)
             {
                 classVital = Math.Max(classVital, 0);
             }
@@ -727,7 +727,7 @@ namespace Intersect.Server.Entities
 
         public override int GetMaxVital(Vitals vital)
         {
-            return GetMaxVital((int) vital);
+            return GetMaxVital((int)vital);
         }
 
         public void FixVitals()
@@ -821,7 +821,7 @@ namespace Intersect.Server.Entities
 
         public void GiveExperience(long amount)
         {
-            Exp += (int) (amount * GetExpMultiplier() / 100);
+            Exp += (int)(amount * GetExpMultiplier() / 100);
             if (Exp < 0)
             {
                 Exp = 0;
@@ -859,61 +859,64 @@ namespace Intersect.Server.Entities
             switch (entity)
             {
                 case Npc npc:
-                {
-                    var descriptor = npc.Base;
-                    var playerEvent = descriptor.OnDeathEvent;
-                    var partyEvent = descriptor.OnDeathPartyEvent;
-
-                    // If in party, split the exp.
-                    if (Party != null && Party.Count > 0)
                     {
-                        var partyMembersInXpRange = Party.Where(partyMember => partyMember.InRangeOf(this, Options.Party.SharedXpRange));
-                        var partyExperience = descriptor.Experience / partyMembersInXpRange.Count();
-                        foreach (var partyMember in partyMembersInXpRange) {
-                            partyMember.GiveExperience(partyExperience);
-                            partyMember.UpdateQuestKillTasks(entity);
-                        }
+                        var descriptor = npc.Base;
+                        var playerEvent = descriptor.OnDeathEvent;
+                        var partyEvent = descriptor.OnDeathPartyEvent;
 
-                        if (partyEvent != null)
+                        // If in party, split the exp.
+                        if (Party != null && Party.Count > 0)
                         {
-                            foreach (var partyMember in Party) {
-                                if (partyMember.InRangeOf(this, Options.Party.NpcDeathCommonEventStartRange) && !(partyMember == this && playerEvent != null)) {
-                                    partyMember.StartCommonEvent(partyEvent);
+                            var partyMembersInXpRange = Party.Where(partyMember => partyMember.InRangeOf(this, Options.Party.SharedXpRange));
+                            var partyExperience = descriptor.Experience / partyMembersInXpRange.Count();
+                            foreach (var partyMember in partyMembersInXpRange)
+                            {
+                                partyMember.GiveExperience(partyExperience);
+                                partyMember.UpdateQuestKillTasks(entity);
+                            }
+
+                            if (partyEvent != null)
+                            {
+                                foreach (var partyMember in Party)
+                                {
+                                    if (partyMember.InRangeOf(this, Options.Party.NpcDeathCommonEventStartRange) && !(partyMember == this && playerEvent != null))
+                                    {
+                                        partyMember.StartCommonEvent(partyEvent);
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        GiveExperience(descriptor.Experience);
-                        UpdateQuestKillTasks(entity);
-                    }
+                        else
+                        {
+                            GiveExperience(descriptor.Experience);
+                            UpdateQuestKillTasks(entity);
+                        }
 
-                    if (playerEvent != null)
-                    {
-                        StartCommonEvent(playerEvent);
-                    }
+                        if (playerEvent != null)
+                        {
+                            StartCommonEvent(playerEvent);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case Resource resource:
-                {
-                    var descriptor = resource.Base;
-                    if (descriptor?.Event != null)
                     {
-                        StartCommonEvent(descriptor.Event);
-                    }
+                        var descriptor = resource.Base;
+                        if (descriptor?.Event != null)
+                        {
+                            StartCommonEvent(descriptor.Event);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
         public void UpdateQuestKillTasks(Entity en)
         {
             //If any quests demand that this Npc be killed then let's handle it
-            var npc = (Npc) en;
+            var npc = (Npc)en;
             foreach (var questProgress in Quests)
             {
                 var questId = questProgress.QuestId;
@@ -1071,7 +1074,7 @@ namespace Intersect.Server.Entities
             if (weapon != null)
             {
                 base.TryAttack(
-                    target, weapon.Damage, (DamageType) weapon.DamageType, (Stats) weapon.ScalingStat, weapon.Scaling,
+                    target, weapon.Damage, (DamageType)weapon.DamageType, (Stats)weapon.ScalingStat, weapon.Scaling,
                     weapon.CritChance, weapon.CritMultiplier, null, null, weapon
                 );
             }
@@ -1081,7 +1084,7 @@ namespace Intersect.Server.Entities
                 if (classBase != null)
                 {
                     base.TryAttack(
-                        target, classBase.Damage, (DamageType) classBase.DamageType, (Stats) classBase.ScalingStat,
+                        target, classBase.Damage, (DamageType)classBase.DamageType, (Stats)classBase.ScalingStat,
                         classBase.Scaling, classBase.CritChance, classBase.CritMultiplier
                     );
                 }
@@ -1168,7 +1171,7 @@ namespace Intersect.Server.Entities
                 }
                 else if (weapon.AttackSpeedModifier == 2) //Percentage
                 {
-                    attackTime = (int) (attackTime * (100f / weapon.AttackSpeedValue));
+                    attackTime = (int)(attackTime * (100f / weapon.AttackSpeedValue));
                 }
             }
 
@@ -1191,10 +1194,10 @@ namespace Intersect.Server.Entities
                         var item = ItemBase.Get(Items[Equipment[i]].ItemId);
                         if (item != null)
                         {
-                            s += Items[Equipment[i]].StatBuffs[(int) statType] +
-                                 item.StatsGiven[(int) statType] +
-                                 (int) ((Stat[(int) statType].BaseStat + StatPointAllocations[(int) statType]) *
-                                        item.PercentageStatsGiven[(int) statType] /
+                            s += Items[Equipment[i]].StatBuffs[(int)statType] +
+                                 item.StatsGiven[(int)statType] +
+                                 (int)((Stat[(int)statType].BaseStat + StatPointAllocations[(int)statType]) *
+                                        item.PercentageStatsGiven[(int)statType] /
                                         100f);
                         }
                     }
@@ -1210,14 +1213,14 @@ namespace Intersect.Server.Entities
 
             if (playerClass != null)
             {
-                for (var i = 0; i < (int) Stats.StatCount; i++)
+                for (var i = 0; i < (int)Stats.StatCount; i++)
                 {
                     var s = playerClass.BaseStat[i];
 
                     //Add class stat scaling
                     if (playerClass.IncreasePercentage) //% increase per level
                     {
-                        s = (int) (s * Math.Pow(1 + (double) playerClass.StatIncrease[i] / 100, Level - 1));
+                        s = (int)(s * Math.Pow(1 + (double)playerClass.StatIncrease[i] / 100, Level - 1));
                     }
                     else //Static value increase per level
                     {
@@ -1254,7 +1257,7 @@ namespace Intersect.Server.Entities
                         }
 
                         i++;
-                        if (i >= (int) Stats.StatCount)
+                        if (i >= (int)Stats.StatCount)
                         {
                             i = 0;
                         }
@@ -1266,7 +1269,7 @@ namespace Intersect.Server.Entities
         //Warping
         public override void Warp(Guid newMapId, byte newX, byte newY, bool adminWarp = false)
         {
-            Warp(newMapId, newX, newY, (byte) Directions.Up, adminWarp, 0, false);
+            Warp(newMapId, newX, newY, (byte)Directions.Up, adminWarp, 0, false);
         }
 
         public override void Warp(
@@ -1342,9 +1345,9 @@ namespace Intersect.Server.Entities
                     mapId = cls.SpawnMapId;
                 }
 
-                x = (byte) cls.SpawnX;
-                y = (byte) cls.SpawnY;
-                dir = (byte) cls.SpawnDir;
+                x = (byte)cls.SpawnX;
+                y = (byte)cls.SpawnY;
+                dir = (byte)cls.SpawnDir;
             }
 
             if (mapId == Guid.Empty)
@@ -1577,7 +1580,7 @@ namespace Intersect.Server.Entities
                     }
 
                     break;
-                    // Did you forget to change this method when you added something? ;)
+                // Did you forget to change this method when you added something? ;)
                 default:
                     throw new NotImplementedException();
             }
@@ -1830,7 +1833,7 @@ namespace Intersect.Server.Entities
                         {
                             case ConsumableType.Health:
                                 value = itemBase.Consumable.Value +
-                                        GetMaxVital((int) itemBase.Consumable.Type) *
+                                        GetMaxVital((int)itemBase.Consumable.Type) *
                                         itemBase.Consumable.Percentage /
                                         100;
 
@@ -1847,7 +1850,7 @@ namespace Intersect.Server.Entities
 
                             case ConsumableType.Mana:
                                 value = itemBase.Consumable.Value +
-                                        GetMaxVital((int) itemBase.Consumable.Type) *
+                                        GetMaxVital((int)itemBase.Consumable.Type) *
                                         itemBase.Consumable.Percentage /
                                         100;
 
@@ -1858,7 +1861,7 @@ namespace Intersect.Server.Entities
 
                             case ConsumableType.Experience:
                                 value = itemBase.Consumable.Value +
-                                        (int) (GetExperienceToNextLevel(Level) * itemBase.Consumable.Percentage / 100);
+                                        (int)(GetExperienceToNextLevel(Level) * itemBase.Consumable.Percentage / 100);
 
                                 GiveExperience(value);
                                 color = CustomColors.Items.ConsumeExp;
@@ -1956,7 +1959,7 @@ namespace Intersect.Server.Entities
                 if (itemBase.Animation != null)
                 {
                     PacketSender.SendAnimationToProximity(
-                        itemBase.Animation.Id, 1, base.Id, MapId, 0, 0, (sbyte) Dir
+                        itemBase.Animation.Id, 1, base.Id, MapId, 0, 0, (sbyte)Dir
                     ); //Target Type 1 will be global entity
                 }
 
@@ -2087,7 +2090,7 @@ namespace Intersect.Server.Entities
 
                     break;
 
-                    // Did you forget something? ;)
+                // Did you forget something? ;)
                 default:
                     throw new NotImplementedException();
             }
@@ -2409,7 +2412,7 @@ namespace Intersect.Server.Entities
                         var item = ItemBase.Get(Items[Equipment[i]].ItemId);
                         if (item != null)
                         {
-                            regen += item.VitalsRegen[(int) vital];
+                            regen += item.VitalsRegen[(int)vital];
                         }
                     }
                 }
@@ -4177,8 +4180,15 @@ namespace Intersect.Server.Entities
                 return false;
             }
 
-            if (target != null && singleTargetCombatSpell)
+            if (target != null && (spell.SpellType == SpellTypes.WarpTo || singleTargetCombatSpell))
             {
+                if (!InRangeOf(target, spell.Combat.CastRange))
+                {
+                    PacketSender.SendActionMsg(this, Strings.Combat.targetoutsiderange, CustomColors.Combat.NoTarget);
+
+                    return false;
+                }
+
                 if (spell.Combat.Friendly && !IsAllyOf(target))
                 {
                     return false;
@@ -4188,10 +4198,12 @@ namespace Intersect.Server.Entities
                 {
                     return false;
                 }
+
+
             }
 
             //Check for range of a single target spell
-            if (spell.SpellType == (int) SpellTypes.CombatSpell &&
+            if (spell.SpellType == (int)SpellTypes.CombatSpell &&
                 spell.Combat.TargetType == SpellTargetTypes.Single &&
                 target != this)
             {
@@ -4205,14 +4217,14 @@ namespace Intersect.Server.Entities
 
             if (checkVitalReqs)
             {
-                if (spell.VitalCost[(int) Vitals.Mana] > GetVital(Vitals.Mana))
+                if (spell.VitalCost[(int)Vitals.Mana] > GetVital(Vitals.Mana))
                 {
                     PacketSender.SendChatMsg(this, Strings.Combat.lowmana);
 
                     return false;
                 }
 
-                if (spell.VitalCost[(int) Vitals.Health] > GetVital(Vitals.Health))
+                if (spell.VitalCost[(int)Vitals.Health] > GetVital(Vitals.Health))
                 {
                     PacketSender.SendChatMsg(this, Strings.Combat.lowhealth);
 
@@ -4245,22 +4257,22 @@ namespace Intersect.Server.Entities
                 {
                     CastTime = Globals.Timing.Milliseconds + spell.CastDuration;
 
-                    if (spell.VitalCost[(int) Vitals.Mana] > 0)
+                    if (spell.VitalCost[(int)Vitals.Mana] > 0)
                     {
-                        SubVital(Vitals.Mana, spell.VitalCost[(int) Vitals.Mana]);
+                        SubVital(Vitals.Mana, spell.VitalCost[(int)Vitals.Mana]);
                     }
                     else
                     {
-                        AddVital(Vitals.Mana, -spell.VitalCost[(int) Vitals.Mana]);
+                        AddVital(Vitals.Mana, -spell.VitalCost[(int)Vitals.Mana]);
                     }
 
-                    if (spell.VitalCost[(int) Vitals.Health] > 0)
+                    if (spell.VitalCost[(int)Vitals.Health] > 0)
                     {
-                        SubVital(Vitals.Health, spell.VitalCost[(int) Vitals.Health]);
+                        SubVital(Vitals.Health, spell.VitalCost[(int)Vitals.Health]);
                     }
                     else
                     {
-                        AddVital(Vitals.Health, -spell.VitalCost[(int) Vitals.Health]);
+                        AddVital(Vitals.Health, -spell.VitalCost[(int)Vitals.Health]);
                     }
 
                     SpellCastSlot = spellSlot;
@@ -4281,7 +4293,7 @@ namespace Intersect.Server.Entities
                     if (spell.CastAnimationId != Guid.Empty)
                     {
                         PacketSender.SendAnimationToProximity(
-                            spell.CastAnimationId, 1, base.Id, MapId, 0, 0, (sbyte) Dir
+                            spell.CastAnimationId, 1, base.Id, MapId, 0, 0, (sbyte)Dir
                         ); //Target Type 1 will be global entity
                     }
 
@@ -4323,17 +4335,17 @@ namespace Intersect.Server.Entities
             switch (spellBase.SpellType)
             {
                 case SpellTypes.Event:
-                {
-                    var evt = spellBase.Event;
-                    if (evt != null)
                     {
-                        StartCommonEvent(evt);
+                        var evt = spellBase.Event;
+                        if (evt != null)
+                        {
+                            StartCommonEvent(evt);
+                        }
+
+                        base.CastSpell(spellId, spellSlot); //To get cooldown :P
+
+                        break;
                     }
-
-                    base.CastSpell(spellId, spellSlot); //To get cooldown :P
-
-                    break;
-                }
                 default:
                     base.CastSpell(spellId, spellSlot);
 
@@ -4473,7 +4485,7 @@ namespace Intersect.Server.Entities
         {
             Hotbar[index].ItemOrSpellId = Guid.Empty;
             Hotbar[index].BagId = Guid.Empty;
-            Hotbar[index].PreferredStatBuffs = new int[(int) Stats.StatCount];
+            Hotbar[index].PreferredStatBuffs = new int[(int)Stats.StatCount];
             if (type == 0) //Item
             {
                 var item = Items[slot];
@@ -4677,7 +4689,7 @@ namespace Intersect.Server.Entities
                                 continue;
                             }
 
-                            if (((StartQuestCommand) stackInfo.WaitingOnCommand).QuestId == questId)
+                            if (((StartQuestCommand)stackInfo.WaitingOnCommand).QuestId == questId)
                             {
                                 var tmpStack = new CommandInstance(stackInfo.Page, stackInfo.BranchIds[0]);
                                 evt.Value.CallStack.Peek().WaitingForResponse = CommandInstance.EventResponse.None;
@@ -4713,7 +4725,7 @@ namespace Intersect.Server.Entities
                             continue;
                         }
 
-                        if (((StartQuestCommand) stackInfo.WaitingOnCommand).QuestId == questId)
+                        if (((StartQuestCommand)stackInfo.WaitingOnCommand).QuestId == questId)
                         {
                             //Run failure branch
                             var tmpStack = new CommandInstance(stackInfo.Page, stackInfo.BranchIds[1]);
@@ -5134,7 +5146,7 @@ namespace Intersect.Server.Entities
                         if (stackInfo.WaitingOnCommand != null &&
                             stackInfo.WaitingOnCommand.Type == EventCommandType.InputVariable)
                         {
-                            var cmd = (InputVariableCommand) stackInfo.WaitingOnCommand;
+                            var cmd = (InputVariableCommand)stackInfo.WaitingOnCommand;
                             VariableValue value = null;
                             var type = VariableDataTypes.Boolean;
                             if (cmd.VariableType == VariableTypes.PlayerVariable)
@@ -5328,7 +5340,7 @@ namespace Intersect.Server.Entities
                             if (command.ToLower() == tmpEvent.PageInstance.MyPage.TriggerCommand.ToLower())
                             {
                                 //Split params up
-                                var prams = param.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                                var prams = param.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                                 for (var x = 0; x < prams.Length; x++)
                                 {
                                     tmpEvent.SetParam("slashParam" + x, prams[x]);
@@ -5429,7 +5441,7 @@ namespace Intersect.Server.Entities
                             instance.Z == z &&
                             !instance.Passable)
                         {
-                            return (int) EntityTypes.Event;
+                            return (int)EntityTypes.Event;
                         }
                     }
                 }
@@ -5447,14 +5459,14 @@ namespace Intersect.Server.Entities
             var attribute = MapInstance.Get(MapId).Attributes[X, Y];
             if (attribute != null && attribute.Type == MapAttributes.Warp)
             {
-                var warpAtt = (MapWarpAttribute) attribute;
+                var warpAtt = (MapWarpAttribute)attribute;
                 if (warpAtt.Direction == WarpDirection.Retain)
                 {
-                    Warp(warpAtt.MapId, warpAtt.X, warpAtt.Y, (byte) Dir);
+                    Warp(warpAtt.MapId, warpAtt.X, warpAtt.Y, (byte)Dir);
                 }
                 else
                 {
-                    Warp(warpAtt.MapId, warpAtt.X, warpAtt.Y, (byte) (warpAtt.Direction - 1));
+                    Warp(warpAtt.MapId, warpAtt.X, warpAtt.Y, (byte)(warpAtt.Direction - 1));
                 }
             }
 
@@ -5564,7 +5576,7 @@ namespace Intersect.Server.Entities
             else
             {
                 // No, handle singular cooldown as normal.
-                
+
                 var cooldownReduction = 1 - this.GetCooldownReduction() / 100;
                 AssignItemCooldown(item.Id, Globals.Timing.MillisecondsUTC + (long)(item.Cooldown * cooldownReduction));
                 PacketSender.SendItemCooldown(this, item.Id);
@@ -5616,7 +5628,7 @@ namespace Intersect.Server.Entities
             // Go through each item and spell to assign this cooldown.
             // Do not allow this to overwrite things that are still on a cooldown above our new cooldown though, don't want us to lower cooldowns!
             // We do however want to overwrite lower cooldowns than our new one, it is a GLOBAL cooldown after all!
-            foreach(var item in ItemBase.Lookup)
+            foreach (var item in ItemBase.Lookup)
             {
                 // Skip this item if it is unaffected by global cooldowns.
                 if (((ItemBase)item.Value).IgnoreGlobalCooldown)
@@ -5669,7 +5681,7 @@ namespace Intersect.Server.Entities
             var matchingSpells = Array.Empty<SpellBase>();
             var itemsUpdated = false;
             var spellsUpdated = false;
-            
+
             if (type == GameObjectType.Item || Options.Combat.LinkSpellAndItemCooldowns)
             {
                 matchingItems = ItemBase.GetCooldownGroup(group);
@@ -5685,7 +5697,7 @@ namespace Intersect.Server.Entities
             {
                 // Get our highest cooldown value from all available options.
                 matchedCooldowntime = Math.Max(
-                    matchingItems.Length > 0 ? matchingItems.Max(i => i.Cooldown) : 0, 
+                    matchingItems.Length > 0 ? matchingItems.Max(i => i.Cooldown) : 0,
                     matchingSpells.Length > 0 ? matchingSpells.Max(i => i.CooldownDuration) : 0);
             }
 
