@@ -821,7 +821,15 @@ namespace Intersect.Server.Entities
 
         public void GiveExperience(long amount)
         {
-            Exp += (int)(amount * GetExpMultiplier() / 100);
+            
+            if (Options.DoubleExp)
+            {
+                Exp += (int)((amount * 2) * GetExpMultiplier() / 100);
+            } else
+            {
+                Exp += (int)(amount * GetExpMultiplier() / 100);
+            }
+
             if (Exp < 0)
             {
                 Exp = 0;

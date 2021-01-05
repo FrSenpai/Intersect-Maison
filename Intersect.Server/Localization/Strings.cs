@@ -1455,6 +1455,7 @@ namespace Intersect.Server.Localization
         [NotNull]
         public static CommandsNamespace Commands => Root.Commands;
 
+
         [NotNull]
         public static CraftingNamespace Crafting => Root.Crafting;
 
