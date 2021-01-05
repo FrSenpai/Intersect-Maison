@@ -19,8 +19,11 @@ namespace Intersect
         [JsonProperty("AdminOnly", Order = -3)]
         protected bool _adminOnly = false;
 
-        [JsonProperty("DoubleExp")]
-        protected bool _doubleExp = false;
+        [JsonProperty("EventExp")]
+        protected bool _eventExp = false;
+
+        [JsonProperty("valueMultiExp")]
+        protected int _valueMultiExp = 1;
 
         //Constantly Animated Sprites
         [JsonProperty("AnimatedSprites")] protected List<string> _animatedSprites = new List<string>();
@@ -168,7 +171,9 @@ namespace Intersect
 
         public static bool AdminOnly { get => Instance._adminOnly; set => Instance._adminOnly = value; }
 
-        public static bool DoubleExp { get => Instance._doubleExp; set => Instance._doubleExp = value; }
+        public static bool DoubleExp { get => Instance._eventExp; set => Instance._eventExp = value; }
+
+        public static int ValueMultiExp { get => Instance._valueMultiExp; set => Instance._valueMultiExp = value; }
 
         public static bool BlockClientRegistrations
         {

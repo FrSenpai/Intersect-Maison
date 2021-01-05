@@ -822,12 +822,14 @@ namespace Intersect.Server.Entities
         public void GiveExperience(long amount)
         {
             
-            if (Options.DoubleExp)
+            if (Options.DoubleExp && Options.ValueMultiExp >= 1)
             {
-                Exp += (int)((amount * 2) * GetExpMultiplier() / 100);
+                Exp += (int)((amount * Options.ValueMultiExp) * GetExpMultiplier() / 100);
+                PacketSender.SendActionMsg(this, $"+ {amount * Options.ValueMultiExp} XP.", Color.Gray);
             } else
             {
                 Exp += (int)(amount * GetExpMultiplier() / 100);
+                PacketSender.SendActionMsg(this, $"+ {amount} XP.", Color.Gray);
             }
 
             if (Exp < 0)

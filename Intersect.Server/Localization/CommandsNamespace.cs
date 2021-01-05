@@ -169,11 +169,11 @@ namespace Intersect.Server.Localization
 
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             [NotNull]
-            public readonly LocaleCommand MakeDoubleExp = new LocaleCommand
+            public readonly LocaleCommand MakeEventExp = new LocaleCommand
             {
-                Name = @"makedoubleexp",
-                Description = @"Enable / Disable exp * 2. Call makedoubleexp true/false.",
-                Help = @"Enable / Disable exp * 2. Call makedoubleexp true/false."
+                Name = @"eventExp",
+                Description = @"Enable / Disable exp event. Call eventExp <true/false> <rate>.",
+                Help = @"Enable / Disable exp event. Call eventExp <true/false> <rate>"
             };
 
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] [NotNull]
@@ -267,10 +267,18 @@ namespace Intersect.Server.Localization
 
                 [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
                 [NotNull]
-                public readonly LocaleArgument DoubleExpBoolean = new LocaleArgument
+                public readonly LocaleArgument ExpEventBoolean = new LocaleArgument
                 {
                     Name = @"value",
                     Description = @"If you want enable double exp : true, else false."
+                };
+
+                [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+                [NotNull]
+                public readonly LocaleArgument ValueMultiExp = new LocaleArgument
+                {
+                    Name = @"valueMultiExp",
+                    Description = @"Set the rate of event exp (example : 2 will double exp values)"
                 };
 
                 [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] [NotNull]
