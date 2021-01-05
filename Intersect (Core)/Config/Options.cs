@@ -19,6 +19,9 @@ namespace Intersect
         [JsonProperty("AdminOnly", Order = -3)]
         protected bool _adminOnly = false;
 
+        [JsonProperty("DoubleExp")]
+        protected bool _doubleExp = false;
+
         //Constantly Animated Sprites
         [JsonProperty("AnimatedSprites")] protected List<string> _animatedSprites = new List<string>();
 
@@ -164,6 +167,8 @@ namespace Intersect
         public static int PasswordResetExpirationMinutes => Instance._passResetExpirationMin;
 
         public static bool AdminOnly { get => Instance._adminOnly; set => Instance._adminOnly = value; }
+
+        public static bool DoubleExp { get => Instance._doubleExp; set => Instance._doubleExp = value; }
 
         public static bool BlockClientRegistrations
         {

@@ -44,6 +44,7 @@ namespace Intersect.Server.Core
                 Parser.Register<KillCommand>();
                 Parser.Register<MakePrivateCommand>();
                 Parser.Register<MakePublicCommand>();
+                Parser.Register<MakeDoubleExpCommand>();
                 Parser.Register<MigrateCommand>();
                 Parser.Register<MuteCommand>();
                 Parser.Register<NetDebugCommand>();

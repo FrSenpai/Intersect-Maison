@@ -146,6 +146,11 @@ namespace Intersect.Server.Localization
             public readonly LocalizedString madepublic =
                 @"The server has now been made public and can be accessed by all players. To change this use the makepublic command or edit the adminonly field in config.json";
 
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            [NotNull]
+            public readonly LocalizedString madedoubleexp =
+                @"Le serveur est maintenant en double exp !";
+
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] [NotNull]
             public readonly LocaleCommand MakePrivate = new LocaleCommand
             {
@@ -160,6 +165,15 @@ namespace Intersect.Server.Localization
                 Name = @"makepublic",
                 Description = @"Makes the server public to all players.",
                 Help = @"Makes the server public to all players."
+            };
+
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            [NotNull]
+            public readonly LocaleCommand MakeDoubleExp = new LocaleCommand
+            {
+                Name = @"makedoubleexp",
+                Description = @"Enable / Disable exp * 2. Call makedoubleexp true/false.",
+                Help = @"Enable / Disable exp * 2. Call makedoubleexp true/false."
             };
 
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] [NotNull]
@@ -249,6 +263,14 @@ namespace Intersect.Server.Localization
                 {
                     Name = @"message",
                     Description = @"the message to send"
+                };
+
+                [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+                [NotNull]
+                public readonly LocaleArgument DoubleExpBoolean = new LocaleArgument
+                {
+                    Name = @"value",
+                    Description = @"If you want enable double exp : true, else false."
                 };
 
                 [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] [NotNull]
