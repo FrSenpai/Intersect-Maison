@@ -2044,7 +2044,7 @@ namespace Intersect.Server.Entities
                 }
                 else
                 {
-                    enemy.Die(Options.ItemDropChance);
+                    enemy.Die(Options.ItemDropChance,this);
 
                     //PVP Kill common events
                     if (this.GetType() == typeof(Player))
@@ -2705,7 +2705,6 @@ namespace Intersect.Server.Entities
             DoT?.Clear();
             Statuses?.Clear();
             Stat?.ToList().ForEach(stat => stat?.Reset());
-
             PacketSender.SendEntityVitals(this);
             Dead = true;
         }

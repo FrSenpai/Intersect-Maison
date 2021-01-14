@@ -624,13 +624,16 @@ namespace Intersect.Server.Entities
         {
             //Flag death to the client
             PacketSender.SendPlayerDeath(this);
-
+            if (killer != null)
+            {
+                PacketSender.SendGlobalMsg(this.Name + " a été tué par " + killer.Name);
+            }
+            
             //Event trigger
             foreach (var evt in EventLookup)
             {
                 evt.Value.PlayerHasDied = true;
             }
-
             base.Die(dropitems, killer);
             PacketSender.SendEntityDie(this);
             Reset();
